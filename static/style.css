@@ -119,13 +119,39 @@ td.highlight-red {
   background-color: #555;
 }/*arrow key end*/
 
-/*selection start*/
-.highlighted {
-    background-color: yellow !important;
-    transition: background-color 0.3s ease;
+/* start color picker*/
+#color-picker {
+  position: relative;
+  width: 40px;
+  height: 350px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 9999;
 }
 
-.art-mode {
-    cursor: crosshair;
-}/*selection end*/
+#color-picker:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: #555;
+  border-radius: 50%;
+}
+
+#color-picker:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 300px;
+  background-color: #555;
+}
+
 
