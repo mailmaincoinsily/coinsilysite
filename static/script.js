@@ -69,3 +69,53 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    var cells = document.querySelectorAll('td, th');
+    var rows = document.querySelectorAll('tr');
+    var isArtMode = false;
+    var selectedColor = '#ff0000';
+
+    // Add event listeners to cells and rows
+    cells.forEach(function(cell) {
+        cell.addEventListener('click', handleCellClick);
+    });
+
+    rows.forEach(function(row) {
+        row.addEventListener('click', handleRowClick);
+    });
+
+    // Handle cell click event
+    function handleCellClick(event) {
+        if (isArtMode) {
+            event.target.style.backgroundColor = selectedColor;
+        } else {
+            event.target.classList.toggle('highlighted');
+        }
+    }
+
+    // Handle row click event
+    function handleRowClick(event) {
+        if (isArtMode) {
+            var cells = event.currentTarget.querySelectorAll('td, th');
+            cells.forEach(function(cell) {
+                cell.style.backgroundColor = selectedColor;
+            });
+        } else {
+            event.currentTarget.classList.toggle('highlighted');
+        }
+    }
+
+    // Handle color picker change event
+    var colorPicker = document.getElementById('selected-color');
+    colorPicker.addEventListener('change', function(event) {
+        selectedColor = event.target.value;
+    });
+
+    // Toggle art mode
+    var colorPickerDiv = document.getElementById('color-picker');
+    colorPickerDiv.addEventListener('click', function() {
+        isArtMode = !isArtMode;
+        colorPickerDiv.classList.toggle('art-mode');
+    });
+});
+
