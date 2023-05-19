@@ -76,9 +76,13 @@ window.addEventListener('DOMContentLoaded', function() {
 });// arrow key function end
 
 //selection function start
-document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Select cells and rows
     var cells = document.querySelectorAll('td, th');
     var rows = document.querySelectorAll('tr');
+
+    // Initialize variables
     var isArtMode = false;
     var selectedColor = '#ff0000';
 
@@ -96,7 +100,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isArtMode) {
             event.target.style.backgroundColor = selectedColor;
         } else {
-            event.target.classList.toggle('highlighted');
+            if (event.target.classList.contains('highlighted')) {
+                event.target.classList.remove('highlighted');
+            } else {
+                event.target.classList.add('highlighted');
+            }
         }
     }
 
@@ -108,7 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 cell.style.backgroundColor = selectedColor;
             });
         } else {
-            event.currentTarget.classList.toggle('highlighted');
+            if (event.currentTarget.classList.contains('highlighted')) {
+                event.currentTarget.classList.remove('highlighted');
+            } else {
+                event.currentTarget.classList.add('highlighted');
+            }
         }
     }
 
@@ -124,5 +136,5 @@ document.addEventListener('DOMContentLoaded', function() {
         isArtMode = !isArtMode;
         colorPickerDiv.classList.toggle('art-mode');
     });
-});//selection function end
+});
 
