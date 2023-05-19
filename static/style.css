@@ -65,15 +65,17 @@ a:hover {
 }
 td.arbitrage {
     text-align: center;
+    position: relative;
 }
 
 td.highlight-green {
-    color: #92e192;
+    border: 2px solid #92e192;
 }
 
 td.highlight-red {
-    color: #ff7f7f;
+    border: 2px solid #ff7f7f;
 }
+
 
 
 
