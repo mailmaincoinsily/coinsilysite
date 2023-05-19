@@ -63,3 +63,9 @@ a:hover {
 .count .value {
     font-size: 20px;
 }
+
+
+.highlight {
+    background-color: #c8e6c9; /* Green background color */
+    color: #000; /* Black text color */
+}
