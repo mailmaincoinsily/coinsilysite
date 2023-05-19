@@ -119,7 +119,7 @@ td.highlight-red {
   background-color: #555;
 }/*arrow key end*/
 
-/*art start*/
+/*selection start*/
 .highlighted {
     background-color: yellow !important;
     transition: background-color 0.3s ease;
@@ -127,6 +127,26 @@ td.highlight-red {
 
 .art-mode {
     cursor: crosshair;
+}/*selection end*/
+
+/*art start*/
+#drawing-board {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
 }
+
+.dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #000;
+}
+
 
 
