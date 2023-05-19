@@ -63,16 +63,11 @@ a:hover {
 .count .value {
     font-size: 20px;
 }
-
-td.arbitrage {
-  text-align: center;
-}
-
-td.arbitrage.highlight-green {
+tr.highlight-green {
   background-color: #92e192;
 }
 
-td.arbitrage.highlight-red {
+tr.highlight-red {
   background-color: #ff7f7f;
 }
 
