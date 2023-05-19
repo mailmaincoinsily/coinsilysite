@@ -147,8 +147,8 @@ function startDrawing(e) {
 function draw(e) {
   if (!isDrawing) return;
 
-  const x = e.clientX - canvas.offsetLeft;
-  const y = e.clientY - canvas.offsetTop;
+  const x = e.clientX;
+  const y = e.clientY;
 
   ctx.fillStyle = color;
   ctx.beginPath();
@@ -176,3 +176,7 @@ const colorPicker = document.getElementById('colorPicker');
 colorPicker.addEventListener('input', function() {
   color = colorPicker.value;
 });
+
+// Event listener for clear button
+const clearButton = document.getElementById('clearButton');
+clearButton.addEventListener('click', clearCanvas);
