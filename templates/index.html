@@ -7,8 +7,18 @@
 <body>
     <h1>Arbitrage Opportunities</h1>
     <div class="counts">
-        <p>Positive Count: {{ positive_count }}</p>
-        <p>Negative Count: {{ negative_count }}</p>
+        <div class="count">
+            <span class="label">Positive Count:</span>
+            <span class="value">{{ positive_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Negative Count:</span>
+            <span class="value">{{ negative_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Total Opportunities:</span>
+            <span class="value">{{ positive_count + negative_count }}</span>
+        </div>
     </div>
     <table>
         <thead>
@@ -26,7 +36,7 @@
                     <td>{{ item.symbol }}</td>
                     <td>{{ item.gateio_price }}</td>
                     <td>{{ item.mexc_price }}</td>
-                    <td><a href="{{ item.gateio_trade_link }}" target="_blank">Gateio</a></td>
+                    <td><a href="{{ item.gateio_trade_link }}" target="_blank">GATEIO</a></td>
                     <td><a href="{{ item.mexc_trade_link }}" target="_blank">MEXC</a></td>
                 </tr>
             {% endfor %}
@@ -36,3 +46,4 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
