@@ -130,36 +130,57 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('DOMContentLoaded', function() {
     var drawingBoard = document.getElementById('drawing-board');
     var isDrawing = false;
+    var selectedColor = '#000';
 
-    // Add mousedown event listener to start drawing
-    drawingBoard.addEventListener('mousedown', startDrawing);
-    // Add mousemove event listener to draw when moving
-    drawingBoard.addEventListener('mousemove', draw);
-    // Add mouseup event listener to stop drawing
-    drawingBoard.addEventListener('mouseup', stopDrawing);
+    // Add mousedown event listener to start drawing or select elements
+    drawingBoard.addEventListener('mousedown', handleMouseDown);
+    // Add mousemove event listener to draw or select elements
+    drawingBoard.addEventListener('mousemove', handleMouseMove);
+    // Add mouseup event listener to stop drawing or selecting elements
+    drawingBoard.addEventListener('mouseup', handleMouseUp);
 
-    function startDrawing(event) {
-        isDrawing = true;
-        var dot = createDot(event.clientX, event.clientY);
-        drawingBoard.appendChild(dot);
+    function handleMouseDown(event) {
+        // Check if the drawing board is clicked
+        if (event.target === drawingBoard) {
+            isDrawing = true;
+        }
     }
 
-    function draw(event) {
-        if (!isDrawing) return;
-        var dot = createDot(event.clientX, event.clientY);
-        drawingBoard.appendChild(dot);
+    function handleMouseMove(event) {
+        // Check if drawing mode is enabled
+        if (isDrawing) {
+            var dot = createDot(event.clientX, event.clientY);
+            drawingBoard.appendChild(dot);
+        }
     }
 
-    function stopDrawing() {
+    function handleMouseUp() {
         isDrawing = false;
     }
 
     function createDot(x, y) {
         var dot = document.createElement('div');
         dot.className = 'dot';
+        dot.style.backgroundColor = selectedColor;
         dot.style.left = x + 'px';
         dot.style.top = y + 'px';
         return dot;
     }
-});
 
+    var colorPicker = document.createElement('div');
+    colorPicker.className = 'color-picker';
+    colorPicker.addEventListener('click', openColorPalette);
+    document.body.appendChild(colorPicker);
+
+    function openColorPalette() {
+        var colorPalette = document.createElement('input');
+        colorPalette.type = 'color';
+        colorPalette.addEventListener('change', function() {
+            selectedColor = colorPalette.value;
+            colorPicker.style.backgroundColor = selectedColor;
+            document.body.removeChild(colorPalette);
+        });
+        document.body.appendChild(colorPalette);
+        colorPalette.click();
+    }
+});
