@@ -115,3 +115,11 @@ td.highlight-red {
   height: 300px;
   background-color: #555;
 }
+.highlighted {
+    background-color: yellow;
+}
+
+.art-mode {
+    cursor: crosshair;
+}
+
