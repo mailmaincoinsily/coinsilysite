@@ -131,22 +131,30 @@ td.highlight-red {
 
 /*art start*/
 #drawing-board {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1;
-    pointer-events: none;
+    background-color: #fff;
+    z-index: 9999;
+    cursor: crosshair;
 }
 
 .dot {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background-color: #000;
 }
 
-
-
+.color-picker {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #000;
+    cursor: pointer;
+}
