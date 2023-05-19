@@ -8,15 +8,18 @@ window.addEventListener('scroll', function() {
         tableHeader.classList.remove('sticky');
     }
 });
+
 window.addEventListener('DOMContentLoaded', function() {
-  var arbitrageCells = document.querySelectorAll('td.arbitrage');
+    var arbitrageCells = document.querySelectorAll('td.arbitrage');
 
-  arbitrageCells.forEach(function(cell) {
-    var arbitrage = parseFloat(cell.textContent);
-
-    if ((arbitrage >= 1 && arbitrage <= 20) || (arbitrage >= -20 && arbitrage <= -1)) {
-      cell.classList.add('highlight');
-    }
-  });
+    arbitrageCells.forEach(function(cell) {
+        var arbitrage = parseFloat(cell.textContent);
+        
+        if (arbitrage >= 1 && arbitrage <= 20) {
+            cell.classList.add('highlight-green');
+        } else if (arbitrage >= -20 && arbitrage <= -1) {
+            cell.classList.add('highlight-red');
+        }
+    });
 });
 
