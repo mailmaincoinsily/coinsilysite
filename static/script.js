@@ -58,3 +58,30 @@ window.addEventListener('DOMContentLoaded', function() {
     highlightedCells[0].classList.add('highlight');
   }
 });
+
+
+window.addEventListener('DOMContentLoaded', function() {
+  var arrow = document.createElement('div');
+  arrow.className = 'floating-arrow';
+  document.body.appendChild(arrow);
+
+  var highlightedCells = [];
+  var currentIndex = -1;
+
+  z
+
+  // Find all the highlighted cells
+  var arbitrageCells = document.querySelectorAll('td.arbitrage');
+  arbitrageCells.forEach(function(cell) {
+    var arbitrage = parseFloat(cell.textContent);
+    if ((arbitrage >= 1 && arbitrage <= 20) || (arbitrage >= -20 && arbitrage <= -1)) {
+      highlightedCells.push(cell);
+      cell.classList.add('highlight');
+    }
+  });
+
+  // Add the highlight class to the first highlighted cell
+  if (highlightedCells.length > 0) {
+    highlightedCells[0].classList.add('active');
+  }
+});
