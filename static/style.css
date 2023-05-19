@@ -131,7 +131,20 @@ td.highlight-red {
   border-radius: 20px;
   cursor: pointer;
   z-index: 9999;
+}/* color selection end*/
+/*mood start*/
+/* Day mode styles */
+body {
+  background-color: #ffffff;
+  color: #000000;
 }
+
+/* Night mode styles */
+body.night-mode {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 
 
 
