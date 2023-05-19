@@ -121,8 +121,8 @@ td.highlight-red {
 /* color selection start*/
 #color-picker {
   position: fixed;
-  top: 50%;
-  right: 0;
+  top: 35%;
+  right: 10px;
   transform: translate(0, -50%);
   width: 50px;
   height: 180px;
