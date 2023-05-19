@@ -121,9 +121,12 @@ td.highlight-red {
 
 /* start color picker*/
 #color-picker {
-  position: relative;
-  width: 40px;
-  height: 350px;
+  position: fixed;
+  top: 400%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 180px;
   background-color: #f2f2f2;
   border: 1px solid #ccc;
   border-radius: 20px;
