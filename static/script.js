@@ -1,3 +1,4 @@
+//first function start
 window.addEventListener('scroll', function() {
     var tableHeader = document.querySelector('thead');
     var rect = tableHeader.getBoundingClientRect();
@@ -7,8 +8,10 @@ window.addEventListener('scroll', function() {
     } else {
         tableHeader.classList.remove('sticky');
     }
-});
+});//first function end
 
+
+// 1-20, -1 -20 color border function start
 window.addEventListener('DOMContentLoaded', function() {
     var arbitrageCells = document.querySelectorAll('td.arbitrage');
 
@@ -21,7 +24,9 @@ window.addEventListener('DOMContentLoaded', function() {
             cell.classList.add('highlight-red');
         }
     });
-});
+});// 1-20, -1 -20 color border function end
+
+//arrow key function start
 window.addEventListener('DOMContentLoaded', function() {
     var arrowKey = document.getElementById('arrow-key');
     var greenCells = document.querySelectorAll('td.highlight-green');
@@ -68,7 +73,9 @@ window.addEventListener('DOMContentLoaded', function() {
             clickCount = 0;
         }
     });
-});
+});// arrow key function end
+
+//art function start
 document.addEventListener('DOMContentLoaded', function() {
     var cells = document.querySelectorAll('td, th');
     var rows = document.querySelectorAll('tr');
@@ -107,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle color picker change event
     var colorPicker = document.getElementById('selected-color');
-    colorPicker.addEventListener('change', function(event) {
+    colorPicker.addEventListener('input', function(event) {
         selectedColor = event.target.value;
     });
 
@@ -118,4 +125,3 @@ document.addEventListener('DOMContentLoaded', function() {
         colorPickerDiv.classList.toggle('art-mode');
     });
 });
-
