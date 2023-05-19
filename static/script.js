@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 //selection function start
 
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Select cells and rows
     var cells = document.querySelectorAll('td, th');
     var rows = document.querySelectorAll('tr');
@@ -85,6 +85,7 @@ window.addEventListener('DOMContentLoaded', function() {
     // Initialize variables
     var isArtMode = false;
     var selectedColor = '#ff0000';
+    var lastClickedElement = null;
 
     // Add event listeners to cells and rows
     cells.forEach(function(cell) {
@@ -99,11 +100,17 @@ window.addEventListener('DOMContentLoaded', function() {
     function handleCellClick(event) {
         if (isArtMode) {
             event.target.style.backgroundColor = selectedColor;
+            lastClickedElement = null;
         } else {
-            if (event.target.classList.contains('highlighted')) {
+            if (lastClickedElement === event.target) {
                 event.target.classList.remove('highlighted');
+                lastClickedElement = null;
             } else {
+                if (lastClickedElement) {
+                    lastClickedElement.classList.remove('highlighted');
+                }
                 event.target.classList.add('highlighted');
+                lastClickedElement = event.target;
             }
         }
     }
@@ -115,11 +122,17 @@ window.addEventListener('DOMContentLoaded', function() {
             cells.forEach(function(cell) {
                 cell.style.backgroundColor = selectedColor;
             });
+            lastClickedElement = null;
         } else {
-            if (event.currentTarget.classList.contains('highlighted')) {
+            if (lastClickedElement === event.currentTarget) {
                 event.currentTarget.classList.remove('highlighted');
+                lastClickedElement = null;
             } else {
+                if (lastClickedElement) {
+                    lastClickedElement.classList.remove('highlighted');
+                }
                 event.currentTarget.classList.add('highlighted');
+                lastClickedElement = event.currentTarget;
             }
         }
     }
@@ -135,6 +148,9 @@ window.addEventListener('DOMContentLoaded', function() {
     colorPickerDiv.addEventListener('click', function() {
         isArtMode = !isArtMode;
         colorPickerDiv.classList.toggle('art-mode');
+        if (lastClickedElement) {
+            lastClickedElement.classList.remove('highlighted');
+            lastClickedElement = null;
+        }
     });
 });
-
