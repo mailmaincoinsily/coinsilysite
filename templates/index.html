@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arbitrage Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Arbitrage Opportunities</h1>
+    <div class="counts">
+        <p>Positive Count: {{ positive_count }}</p>
+        <p>Negative Count: {{ negative_count }}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Gateio Price</th>
+                <th>MEXC Global Price</th>
+                <th>Gateio Trade Link</th>
+                <th>MEXC Trade Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.gateio_price }}</td>
+                    <td>{{ item.mexc_price }}</td>
+                    <td><a href="{{ item.gateio_trade_link }}" target="_blank">Gateio</a></td>
+                    <td><a href="{{ item.mexc_trade_link }}" target="_blank">MEXC</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
