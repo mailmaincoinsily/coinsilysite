@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arbitrage Opportunities</title>
+</head>
+<body>
+    <h1>Arbitrage Opportunities</h1>
+
+    <h2>Positive Opportunities</h2>
+    {% if positive_count > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Gate.io Price</th>
+                    <th>MEXC Global Price</th>
+                    <th>Arbitrage (%)</th>
+                    <th>Trade on Gate.io</th>
+                    <th>Trade on MEXC Global</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data if item['arbitrage'] > 0 %}
+                    <tr>
+                        <td>{{ item['symbol'] }}</td>
+                        <td>{{ item['gateio_price'] }}</td>
+                        <td>{{ item['mexc_price'] }}</td>
+                        <td>{{ item['arbitrage'] }}</td>
+                        <td><a href="{{ item['gateio_trade_link'] }}">Trade</a></td>
+                        <td><a href="{{ item['mexc_trade_link'] }}">Trade</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No positive arbitrage opportunities found.</p>
+    {% endif %}
+
+    <h2>Negative Opportunities</h2>
+    {% if negative_count > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Gate.io Price</th>
+                    <th>MEXC Global Price</th>
+                    <th>Arbitrage (%)</th>
+                    <th>Trade on Gate.io</th>
+                    <th>Trade on MEXC Global</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data if item['arbitrage'] < 0 %}
+                    <tr>
+                        <td>{{ item['symbol'] }}</td>
+                        <td>{{ item['gateio_price'] }}</td>
+                        <td>{{ item['mexc_price'] }}</td>
+                        <td>{{ item['arbitrage'] }}</td>
+                        <td><a href="{{ item['gateio_trade_link'] }}">Trade</a></td>
+                        <td><a href="{{ item['mexc_trade_link'] }}">Trade</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No negative arbitrage opportunities found.</p>
+    {% endif %}
+</body>
+</html>
