@@ -78,79 +78,79 @@ window.addEventListener('DOMContentLoaded', function() {
 //selection function start
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Select cells and rows
-    var cells = document.querySelectorAll('td, th');
-    var rows = document.querySelectorAll('tr');
+  // Select cells and rows
+  var cells = document.querySelectorAll('td, th');
+  var rows = document.querySelectorAll('tr');
 
-    // Initialize variables
-    var isArtMode = false;
-    var selectedColor = '#ff0000';
-    var lastClickedElement = null;
+  // Initialize variables
+  var isArtMode = false;
+  var selectedColor = '#ff0000';
+  var lastClickedElement = null;
 
-    // Add event listeners to cells and rows
-    cells.forEach(function(cell) {
-        cell.addEventListener('click', handleCellClick);
-    });
+  // Add event listeners to cells and rows
+  cells.forEach(function (cell) {
+    cell.addEventListener('click', handleCellClick);
+  });
 
-    rows.forEach(function(row) {
-        row.addEventListener('click', handleRowClick);
-    });
+  rows.forEach(function (row) {
+    row.addEventListener('click', handleRowClick);
+  });
 
-    // Handle cell click event
-    function handleCellClick(event) {
-        if (isArtMode) {
-            event.target.style.backgroundColor = selectedColor;
-            lastClickedElement = null;
-        } else {
-            if (lastClickedElement === event.target) {
-                event.target.classList.remove('highlighted');
-                lastClickedElement = null;
-            } else {
-                if (lastClickedElement) {
-                    lastClickedElement.classList.remove('highlighted');
-                }
-                event.target.classList.add('highlighted');
-                lastClickedElement = event.target;
-            }
-        }
-    }
-
-    // Handle row click event
-    function handleRowClick(event) {
-        if (isArtMode) {
-            var cells = event.currentTarget.querySelectorAll('td, th');
-            cells.forEach(function(cell) {
-                cell.style.backgroundColor = selectedColor;
-            });
-            lastClickedElement = null;
-        } else {
-            if (lastClickedElement === event.currentTarget) {
-                event.currentTarget.classList.remove('highlighted');
-                lastClickedElement = null;
-            } else {
-                if (lastClickedElement) {
-                    lastClickedElement.classList.remove('highlighted');
-                }
-                event.currentTarget.classList.add('highlighted');
-                lastClickedElement = event.currentTarget;
-            }
-        }
-    }
-
-    // Handle color picker change event
-    var colorPicker = document.getElementById('selected-color');
-    colorPicker.addEventListener('input', function(event) {
-        selectedColor = event.target.value;
-    });
-
-    // Toggle art mode
-    var colorPickerDiv = document.getElementById('color-picker');
-    colorPickerDiv.addEventListener('click', function() {
-        isArtMode = !isArtMode;
-        colorPickerDiv.classList.toggle('art-mode');
+  // Handle cell click event
+  function handleCellClick(event) {
+    if (isArtMode) {
+      event.target.style.backgroundColor = selectedColor;
+      lastClickedElement = null;
+    } else {
+      if (event.target.classList.contains('highlighted')) {
+        event.target.classList.remove('highlighted');
+        lastClickedElement = null;
+      } else {
         if (lastClickedElement) {
-            lastClickedElement.classList.remove('highlighted');
-            lastClickedElement = null;
+          lastClickedElement.classList.remove('highlighted');
         }
-    });
+        event.target.classList.add('highlighted');
+        lastClickedElement = event.target;
+      }
+    }
+  }
+
+  // Handle row click event
+  function handleRowClick(event) {
+    if (isArtMode) {
+      var cells = event.currentTarget.querySelectorAll('td, th');
+      cells.forEach(function (cell) {
+        cell.style.backgroundColor = selectedColor;
+      });
+      lastClickedElement = null;
+    } else {
+      if (event.currentTarget.classList.contains('highlighted')) {
+        event.currentTarget.classList.remove('highlighted');
+        lastClickedElement = null;
+      } else {
+        if (lastClickedElement) {
+          lastClickedElement.classList.remove('highlighted');
+        }
+        event.currentTarget.classList.add('highlighted');
+        lastClickedElement = event.currentTarget;
+      }
+    }
+  }
+
+  // Handle color picker change event
+  var colorPicker = document.getElementById('selected-color');
+  colorPicker.addEventListener('input', function (event) {
+    selectedColor = event.target.value;
+  });
+
+  // Toggle art mode
+  var colorPickerDiv = document.getElementById('color-picker');
+  colorPickerDiv.addEventListener('click', function () {
+    isArtMode = !isArtMode;
+    colorPickerDiv.classList.toggle('art-mode');
+    if (lastClickedElement) {
+      lastClickedElement.classList.remove('highlighted');
+      lastClickedElement = null;
+    }
+  });
 });
