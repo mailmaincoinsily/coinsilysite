@@ -1,4 +1,4 @@
 flask
 ccxt
 gunicorn
-logging==0.5.1
+logging==0.4.9.6
