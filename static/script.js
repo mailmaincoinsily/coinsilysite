@@ -8,19 +8,17 @@ window.addEventListener('scroll', function() {
         tableHeader.classList.remove('sticky');
     }
 });
-
 window.addEventListener('DOMContentLoaded', function() {
-  var arbitrageCells = document.querySelectorAll('td.arbitrage');
+  var arbitrageRows = document.querySelectorAll('tbody tr');
 
-  arbitrageCells.forEach(function(cell) {
-    var arbitrage = parseFloat(cell.textContent);
-    
+  arbitrageRows.forEach(function(row) {
+    var arbitrageCell = row.querySelector('.arbitrage');
+    var arbitrage = parseFloat(arbitrageCell.textContent);
+
     if (arbitrage >= 1 && arbitrage <= 20) {
-      cell.classList.add('highlight-green');
+      row.classList.add('highlight-green');
     } else if (arbitrage >= -20 && arbitrage <= -1) {
-      cell.classList.add('highlight-red');
+      row.classList.add('highlight-red');
     }
   });
 });
-
-
