@@ -64,6 +64,18 @@ a:hover {
     font-size: 20px;
 }
 
+td.arbitrage {
+  text-align: center;
+}
+
+td.arbitrage.highlight-green {
+  background-color: #92e192;
+}
+
+td.arbitrage.highlight-red {
+  background-color: #ff7f7f;
+}
+
 
 
 
