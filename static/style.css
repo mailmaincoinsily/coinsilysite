@@ -68,11 +68,11 @@ td.arbitrage {
 }
 
 td.highlight-green {
-    background-color: #92e192;
+    color: #92e192;
 }
 
 td.highlight-red {
-    background-color: #ff7f7f;
+    color: #ff7f7f;
 }
 
 
