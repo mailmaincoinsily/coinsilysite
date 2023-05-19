@@ -69,14 +69,17 @@ td.arbitrage {
 }
 
 td.highlight-green {
-    border: 2px solid #92e192;
+    border: 1px solid rgba(146, 225, 146, 0.8);
     font-weight: bold;
+    border-radius: 3px;
 }
 
 td.highlight-red {
-    border: 2px solid #ff7f7f;
+    border: 1px solid rgba(255, 127, 127, 0.8);
     font-weight: bold;
+    border-radius: 3px;
 }
+
 
 
 
