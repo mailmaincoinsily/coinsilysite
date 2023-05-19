@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arbitrage Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Arbitrage Opportunities</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Gateio Price</th>
+                <th>MEXC Global Price</th>
+                <th>Arbitrage (%)</th>
+                <th>Gateio Trade Link</th>
+                <th>MEXC Trade Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.gateio_price }}</td>
+                    <td>{{ item.mexc_price }}</td>
+                    <td>{{ item.arbitrage }}</td>
+                    <td><a href="{{ item.gateio_trade_link }}">{{ item.gateio_trade_symbol }}</a></td>
+                    <td><a href="{{ item.mexc_trade_link }}">{{ item.mexc_trade_symbol }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
