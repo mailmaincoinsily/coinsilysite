@@ -127,63 +127,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });//selection function end
 
 //art function start
-// Variables to track the selected color and mode
-let selectedColor = '';
-let mode = 'select';
+// Get the canvas element and its context
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
-// Add click event listener to the dot element
-const dotElement = document.querySelector('#dot');
-dotElement.addEventListener('click', toggleMode);
+// Set initial drawing color
+let color = '#000000';
 
-// Function to toggle between select and art mode
-function toggleMode() {
-  if (mode === 'select') {
-    mode = 'art';
-    dotElement.style.backgroundColor = selectedColor;
-    document.addEventListener('click', handleArtClick);
-  } else {
-    mode = 'select';
-    dotElement.style.backgroundColor = 'black';
-    document.removeEventListener('click', handleArtClick);
-  }
+// Set drawing state
+let isDrawing = false;
+
+// Function to handle mouse down event
+function startDrawing(e) {
+  isDrawing = true;
+  draw(e);
 }
 
-// Function to handle click events when in art mode
-function handleArtClick(event) {
-  const clickedElement = event.target;
-  if (clickedElement !== dotElement) {
-    clickedElement.style.backgroundColor = selectedColor;
-  }
+// Function to handle mouse move event
+function draw(e) {
+  if (!isDrawing) return;
+
+  const x = e.clientX - canvas.offsetLeft;
+  const y = e.clientY - canvas.offsetTop;
+
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, 5, 5);
 }
 
-// Add click event listeners to cells and rows for selecting
-const cells = document.querySelectorAll('td');
-const rows = document.querySelectorAll('tr');
+// Function to handle mouse up event
+function stopDrawing() {
+  isDrawing = false;
+}
 
-cells.forEach((cell) => {
-  cell.addEventListener('click', handleCellClick);
+// Function to clear the canvas
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Event listeners
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+
+// Event listener for color picker
+const colorPicker = document.getElementById('colorPicker');
+colorPicker.addEventListener('input', function() {
+  color = colorPicker.value;
 });
-
-rows.forEach((row) => {
-  row.addEventListener('click', handleRowClick);
-});
-
-// Function to handle click events on cells
-function handleCellClick(event) {
-  const cell = event.target;
-  cell.style.backgroundColor = selectedColor;
-}
-
-// Function to handle click events on rows
-function handleRowClick(event) {
-  const row = event.target;
-  const cellsInRow = row.querySelectorAll('td');
-  cellsInRow.forEach((cell) => {
-    cell.style.backgroundColor = selectedColor;
-  });
-}
-
-// Function to set the selected color
-function setColor(color) {
-  selectedColor = color;
-}
