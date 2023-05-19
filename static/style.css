@@ -133,7 +133,7 @@ td.highlight-red {
 
 body {
       margin: 0;
-      overflow: hidden;
+      /*overflow: hidden;*/
     }
 canvas {
       position: fixed;
