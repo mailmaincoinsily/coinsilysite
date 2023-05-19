@@ -127,60 +127,63 @@ document.addEventListener('DOMContentLoaded', function() {
 });//selection function end
 
 //art function start
-window.addEventListener('DOMContentLoaded', function() {
-    var drawingBoard = document.getElementById('drawing-board');
-    var isDrawing = false;
-    var selectedColor = '#000';
+// Variables to track the selected color and mode
+let selectedColor = '';
+let mode = 'select';
 
-    // Add mousedown event listener to start drawing or select elements
-    drawingBoard.addEventListener('mousedown', handleMouseDown);
-    // Add mousemove event listener to draw or select elements
-    drawingBoard.addEventListener('mousemove', handleMouseMove);
-    // Add mouseup event listener to stop drawing or selecting elements
-    drawingBoard.addEventListener('mouseup', handleMouseUp);
+// Add click event listener to the dot element
+const dotElement = document.querySelector('#dot');
+dotElement.addEventListener('click', toggleMode);
 
-    function handleMouseDown(event) {
-        // Check if the drawing board is clicked
-        if (event.target === drawingBoard) {
-            isDrawing = true;
-        }
-    }
+// Function to toggle between select and art mode
+function toggleMode() {
+  if (mode === 'select') {
+    mode = 'art';
+    dotElement.style.backgroundColor = selectedColor;
+    document.addEventListener('click', handleArtClick);
+  } else {
+    mode = 'select';
+    dotElement.style.backgroundColor = 'black';
+    document.removeEventListener('click', handleArtClick);
+  }
+}
 
-    function handleMouseMove(event) {
-        // Check if drawing mode is enabled
-        if (isDrawing) {
-            var dot = createDot(event.clientX, event.clientY);
-            drawingBoard.appendChild(dot);
-        }
-    }
+// Function to handle click events when in art mode
+function handleArtClick(event) {
+  const clickedElement = event.target;
+  if (clickedElement !== dotElement) {
+    clickedElement.style.backgroundColor = selectedColor;
+  }
+}
 
-    function handleMouseUp() {
-        isDrawing = false;
-    }
+// Add click event listeners to cells and rows for selecting
+const cells = document.querySelectorAll('td');
+const rows = document.querySelectorAll('tr');
 
-    function createDot(x, y) {
-        var dot = document.createElement('div');
-        dot.className = 'dot';
-        dot.style.backgroundColor = selectedColor;
-        dot.style.left = x + 'px';
-        dot.style.top = y + 'px';
-        return dot;
-    }
-
-    var colorPicker = document.createElement('div');
-    colorPicker.className = 'color-picker';
-    colorPicker.addEventListener('click', openColorPalette);
-    document.body.appendChild(colorPicker);
-
-    function openColorPalette() {
-        var colorPalette = document.createElement('input');
-        colorPalette.type = 'color';
-        colorPalette.addEventListener('change', function() {
-            selectedColor = colorPalette.value;
-            colorPicker.style.backgroundColor = selectedColor;
-            document.body.removeChild(colorPalette);
-        });
-        document.body.appendChild(colorPalette);
-        colorPalette.click();
-    }
+cells.forEach((cell) => {
+  cell.addEventListener('click', handleCellClick);
 });
+
+rows.forEach((row) => {
+  row.addEventListener('click', handleRowClick);
+});
+
+// Function to handle click events on cells
+function handleCellClick(event) {
+  const cell = event.target;
+  cell.style.backgroundColor = selectedColor;
+}
+
+// Function to handle click events on rows
+function handleRowClick(event) {
+  const row = event.target;
+  const cellsInRow = row.querySelectorAll('td');
+  cellsInRow.forEach((cell) => {
+    cell.style.backgroundColor = selectedColor;
+  });
+}
+
+// Function to set the selected color
+function setColor(color) {
+  selectedColor = color;
+}
