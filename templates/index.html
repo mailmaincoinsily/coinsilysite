@@ -26,6 +26,7 @@
                 <th>Symbol</th>
                 <th>Gateio Price</th>
                 <th>MEXC Global Price</th>
+                <th>Arbitrage (%)</th>
                 <th>Gateio Trade Link</th>
                 <th>MEXC Trade Link</th>
             </tr>
@@ -36,6 +37,7 @@
                     <td>{{ item.symbol }}</td>
                     <td>{{ item.gateio_price }}</td>
                     <td>{{ item.mexc_price }}</td>
+                    <td>{{ item.arbitrage }}</td>
                     <td><a href="{{ item.gateio_trade_link }}" target="_blank">GATEIO</a></td>
                     <td><a href="{{ item.mexc_trade_link }}" target="_blank">MEXC</a></td>
                 </tr>
