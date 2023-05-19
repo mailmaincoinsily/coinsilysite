@@ -22,38 +22,50 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+window.addEventListener('DOMContentLoaded', function() {
+    var arrowKey = document.getElementById('arrow-key');
+    var greenCells = document.querySelectorAll('td.highlight-green');
+    var redCells = document.querySelectorAll('td.highlight-red');
 
-// Add this code inside your script.js file
+    var currentIndex = -1;
+    var clickCount = 0;
 
-// Get the arrow key element
-var arrowKey = document.getElementById('arrow-key');
-var isGreenHighlighted = true;
+    arrowKey.addEventListener('click', function() {
+        clickCount++;
 
-// Handle click event on arrow key
-arrowKey.addEventListener('click', function() {
-    // Toggle between green and red highlights
-    if (isGreenHighlighted) {
-        highlightGreen();
-        isGreenHighlighted = false;
-    } else {
-        highlightRed();
-        isGreenHighlighted = true;
-    }
+        if (clickCount === 1) {
+            if (currentIndex === -1 || currentIndex === greenCells.length - 1) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+
+            if (greenCells.length > 0) {
+                greenCells.forEach(function(cell) {
+                    cell.classList.remove('current');
+                });
+
+                greenCells[currentIndex].classList.add('current');
+                greenCells[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        } else if (clickCount === 2) {
+            if (currentIndex === -1 || currentIndex === redCells.length - 1) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+
+            if (redCells.length > 0) {
+                redCells.forEach(function(cell) {
+                    cell.classList.remove('current');
+                });
+
+                redCells[currentIndex].classList.add('current');
+                redCells[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            clickCount = 0;
+        }
+    });
 });
-
-// Function to highlight green
-function highlightGreen() {
-    var greenHighlights = document.querySelectorAll('.highlight-green');
-    greenHighlights.forEach(function(element) {
-        element.classList.remove('highlight-green');
-    });
-}
-
-// Function to highlight red
-function highlightRed() {
-    var redHighlights = document.querySelectorAll('.highlight-red');
-    redHighlights.forEach(function(element) {
-        element.classList.remove('highlight-red');
-    });
-}
-
