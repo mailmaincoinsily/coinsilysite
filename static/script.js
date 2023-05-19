@@ -155,13 +155,5 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });//color selection end
 
-//mood start
-document.addEventListener('DOMContentLoaded', function() {
-  var modeToggle = document.getElementById('mode-toggle');
-  var body = document.body;
 
-  modeToggle.addEventListener('click', function() {
-    body.classList.toggle('night-mode');
-  });
-});
 
