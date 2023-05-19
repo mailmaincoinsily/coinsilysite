@@ -85,3 +85,33 @@ window.addEventListener('DOMContentLoaded', function() {
     highlightedCells[0].classList.add('active');
   }
 });
+
+// Floating Arrow
+var floatingArrow = document.createElement('div');
+floatingArrow.className = 'floating-arrow';
+document.body.appendChild(floatingArrow);
+
+// Arrow Click Event
+floatingArrow.addEventListener('click', function() {
+  var highlightedCells = document.querySelectorAll('.highlight');
+  var activeCells = document.querySelectorAll('.active');
+
+  if (highlightedCells.length > 0) {
+    highlightedCells.forEach(function(cell) {
+      cell.classList.remove('highlight');
+    });
+
+    activeCells.forEach(function(cell) {
+      cell.classList.add('highlight');
+    });
+
+    floatingArrow.classList.add('active');
+  } else {
+    activeCells.forEach(function(cell) {
+      cell.classList.remove('highlight');
+    });
+
+    floatingArrow.classList.remove('active');
+  }
+});
+
