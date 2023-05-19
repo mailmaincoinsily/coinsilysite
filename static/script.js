@@ -151,7 +151,9 @@ function draw(e) {
   const y = e.clientY - canvas.offsetTop;
 
   ctx.fillStyle = color;
-  ctx.fillRect(x, y, 5, 5);
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.fill();
 }
 
 // Function to handle mouse up event
