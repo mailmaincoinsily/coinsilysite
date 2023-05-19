@@ -4,6 +4,7 @@ from flask import Flask, render_template
 import ccxt
 
 app = Flask(__name__)
+app.static_folder = 'static'
 logger = logging.getLogger(__name__)
 
 # Configure logger to write logs to a file
