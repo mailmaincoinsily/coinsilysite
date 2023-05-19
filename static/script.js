@@ -23,3 +23,37 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Add this code inside your script.js file
+
+// Get the arrow key element
+var arrowKey = document.getElementById('arrow-key');
+var isGreenHighlighted = true;
+
+// Handle click event on arrow key
+arrowKey.addEventListener('click', function() {
+    // Toggle between green and red highlights
+    if (isGreenHighlighted) {
+        highlightGreen();
+        isGreenHighlighted = false;
+    } else {
+        highlightRed();
+        isGreenHighlighted = true;
+    }
+});
+
+// Function to highlight green
+function highlightGreen() {
+    var greenHighlights = document.querySelectorAll('.highlight-green');
+    greenHighlights.forEach(function(element) {
+        element.classList.remove('highlight-green');
+    });
+}
+
+// Function to highlight red
+function highlightRed() {
+    var redHighlights = document.querySelectorAll('.highlight-red');
+    redHighlights.forEach(function(element) {
+        element.classList.remove('highlight-red');
+    });
+}
+
