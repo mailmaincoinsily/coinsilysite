@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 });// arrow key function end
 
-//art function start
+//selection function start
 document.addEventListener('DOMContentLoaded', function() {
     var cells = document.querySelectorAll('td, th');
     var rows = document.querySelectorAll('tr');
@@ -124,4 +124,42 @@ document.addEventListener('DOMContentLoaded', function() {
         isArtMode = !isArtMode;
         colorPickerDiv.classList.toggle('art-mode');
     });
+});//selection function end
+
+//art function start
+window.addEventListener('DOMContentLoaded', function() {
+    var drawingBoard = document.getElementById('drawing-board');
+    var isDrawing = false;
+
+    // Add mousedown event listener to start drawing
+    drawingBoard.addEventListener('mousedown', startDrawing);
+    // Add mousemove event listener to draw when moving
+    drawingBoard.addEventListener('mousemove', draw);
+    // Add mouseup event listener to stop drawing
+    drawingBoard.addEventListener('mouseup', stopDrawing);
+
+    function startDrawing(event) {
+        isDrawing = true;
+        var dot = createDot(event.clientX, event.clientY);
+        drawingBoard.appendChild(dot);
+    }
+
+    function draw(event) {
+        if (!isDrawing) return;
+        var dot = createDot(event.clientX, event.clientY);
+        drawingBoard.appendChild(dot);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+    }
+
+    function createDot(x, y) {
+        var dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+        return dot;
+    }
 });
+
