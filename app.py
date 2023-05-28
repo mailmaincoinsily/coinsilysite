@@ -18,7 +18,7 @@ logger.addHandler(handler)
 def index():
     gateio = ccxt.gateio()
     mexc_global = ccxt.mexc()
-    uniswap = ccxt.uniswapv2()
+    uniswap = ccxt.uniswap()
     pancakeswap = ccxt.pancakeswapv2()
 
     try:
