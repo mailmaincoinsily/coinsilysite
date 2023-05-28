@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arbitrage Opportunities</title>
+</head>
+<body>
+    <h1>Arbitrage Opportunities</h1>
+
+    <h2>Uniswap</h2>
+    <p>Positive opportunities: {{ positive_uniswap_count }}</p>
+    <p>Negative opportunities: {{ negative_uniswap_count }}</p>
+
+    <table>
+        <tr>
+            <th>Symbol</th>
+            <th>Gateio Price</th>
+            <th>MEXC Price</th>
+            <th>Uniswap Price</th>
+            <th>Pancakeswap Price</th>
+            <th>Arbitrage Uniswap (%)</th>
+            <th>Arbitrage Pancakeswap (%)</th>
+        </tr>
+        {% for item in data %}
+            <tr>
+                <td>{{ item.symbol }}</td>
+                <td>{{ item.gateio_price }}</td>
+                <td>{{ item.mexc_price }}</td>
+                <td>{{ item.uniswap_price }}</td>
+                <td>{{ item.pancakeswap_price }}</td>
+                <td>{{ item.arbitrage_uniswap }}</td>
+                <td>{{ item.arbitrage_pancakeswap }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>PancakeSwap</h2>
+    <p>Positive opportunities: {{ positive_pancakeswap_count }}</p>
+    <p>Negative opportunities: {{ negative_pancakeswap_count }}</p>
+
+</body>
+</html>
