@@ -1,1 +1,2 @@
-test: python test.py
+
+web: python $START_FILE
