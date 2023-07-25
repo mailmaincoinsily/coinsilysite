@@ -14,7 +14,6 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-@app.route('/')
 def index():
     gateio = ccxt.gateio()
     mexc_global = ccxt.mexc()
@@ -44,6 +43,9 @@ def index():
 
     data = []
     for symbol in common_symbols:
+        if symbol not in gateio.currencies:
+            continue
+
         gateio_price = float(gateio_tickers[symbol]['last'])
         mexc_price = float(mexc_tickers[symbol]['last']) if mexc_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((mexc_price - gateio_price) / gateio_price * 100, 2)
@@ -54,10 +56,6 @@ def index():
         symbol_profit = arbitrage - gateio_withdrawal_fee - mexc_withdrawal_fee
         symbol['profit'] = symbol_profit
 
-        # Filter out arbitrage opportunities that are not profitable
-        if symbol_profit > 0:
-            data.append(symbol)
-
     # Sort data by profit value
     data.sort(key=lambda x: x['profit'], reverse=True)
 
@@ -66,6 +64,7 @@ def index():
 
     logger.info("Data: %s", data)
     return render_template('index.html', data=data, profit_count=profit_count)
+
 
 if __name__ == '__main__':
     app.run()
