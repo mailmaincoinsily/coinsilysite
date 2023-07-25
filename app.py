@@ -14,6 +14,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+@app.route('/')
 def index():
     gateio = ccxt.gateio()
     mexc_global = ccxt.mexc()
@@ -64,7 +65,6 @@ def index():
 
     logger.info("Data: %s", data)
     return render_template('index.html', data=data, profit_count=profit_count)
-
 
 if __name__ == '__main__':
     app.run()
