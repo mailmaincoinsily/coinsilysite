@@ -14,6 +14,8 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+# ... (Previous code)
+
 @app.route('/')
 def index():
     gateio = ccxt.gateio()
@@ -40,25 +42,32 @@ def index():
         return render_template('error.html', error_message=error_message)
 
     # Filter currencies with deposit and withdrawal enabled on both exchanges
-    gateio_currencies = set(gateio.fetch_currencies().keys())
-    mexc_currencies = set(mexc_global.fetch_currencies().keys())
-    common_currencies = gateio_currencies.intersection(mexc_currencies)
+    gateio_currencies = gateio.fetch_currencies()
+    mexc_currencies = mexc_global.fetch_currencies()
+
+    if gateio_currencies is None or mexc_currencies is None:
+        error_message = "Failed to fetch currencies from one or both exchanges."
+        logger.error(error_message)
+        return render_template('error.html', error_message=error_message)
+
+    gateio_currencies = {symbol: currency_info for symbol, currency_info in gateio_currencies.items() if 'depositEnable' in currency_info and 'withdrawEnable' in currency_info and currency_info['depositEnable'] and currency_info['withdrawEnable']}
+    mexc_currencies = {symbol: currency_info for symbol, currency_info in mexc_currencies.items() if 'depositEnable' in currency_info and 'withdrawEnable' in currency_info and currency_info['depositEnable'] and currency_info['withdrawEnable']}
 
     # Filter currencies with the same contract address on both exchanges (for tokens)
-    common_symbols = set([symbol for symbol in common_currencies if 'contract' in gateio.currencies[symbol] and 'contract' in mexc_global.currencies[symbol] and gateio.currencies[symbol]['contract'] == mexc_global.currencies[symbol]['contract']])
+    common_symbols = set([symbol for symbol in gateio_currencies.keys() if 'contract' in gateio_currencies[symbol] and 'contract' in mexc_currencies[symbol] and gateio_currencies[symbol]['contract'] == mexc_currencies[symbol]['contract']])
 
     # Filter currencies with the same network available for transactions on both exchanges (for tokens)
-    common_symbols = common_symbols.intersection([symbol for symbol in common_symbols if 'networkList' in gateio.currencies[symbol] and 'networkList' in mexc_global.currencies[symbol] and any(network_info['network'] == 'common_network' for network_info in gateio.currencies[symbol]['networkList'] if 'common_network' in [network_info['network'] for network_info in mexc_global.currencies[symbol]['networkList']])])
+    common_symbols = common_symbols.intersection([symbol for symbol in common_symbols if 'networkList' in gateio_currencies[symbol] and 'networkList' in mexc_currencies[symbol] and any(network_info['network'] == 'common_network' for network_info in gateio_currencies[symbol]['networkList'] if 'common_network' in [network_info['network'] for network_info in mexc_currencies[symbol]['networkList']])])
 
     data = []
     for symbol in common_symbols:
-        gateio_price = float(gateio_tickers[symbol]['last'])
-        mexc_price = float(mexc_tickers[symbol]['last']) if mexc_tickers[symbol]['last'] is not None else 0.0
+        gateio_price = gateio_tickers.get(symbol, {}).get('last', 0.0)
+        mexc_price = mexc_tickers.get(symbol, {}).get('last', 0.0)
         arbitrage = round((mexc_price - gateio_price) / gateio_price * 100, 2)
 
         # Deduct withdrawal fee from the arbitrage profit
-        gateio_withdrawal_fee = float(gateio.currencies[symbol]['withdrawFee']) if 'withdrawFee' in gateio.currencies[symbol] else 0.0
-        mexc_withdrawal_fee = float(mexc_global.currencies[symbol]['withdrawFee']) if 'withdrawFee' in mexc_global.currencies[symbol] else 0.0
+        gateio_withdrawal_fee = gateio_currencies[symbol].get('withdrawFee', 0.0)
+        mexc_withdrawal_fee = mexc_currencies[symbol].get('withdrawFee', 0.0)
 
         profit_after_fees = arbitrage - (gateio_withdrawal_fee + mexc_withdrawal_fee)
 
