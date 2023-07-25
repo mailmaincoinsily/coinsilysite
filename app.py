@@ -14,6 +14,14 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+def get_gateio_currency_info(exchange, symbol):
+    try:
+        gateio_currency_info = exchange.fetch_currency(symbol)
+        return gateio_currency_info
+    except Exception as e:
+        logger.error("Error fetching currency information from Gate.io: %s", e)
+        return None
+
 @app.route('/')
 def index():
     gateio = ccxt.gateio()
@@ -48,36 +56,30 @@ def index():
         mexc_price = float(mexc_tickers[symbol]['last']) if mexc_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((mexc_price - gateio_price) / gateio_price * 100, 2)
 
-        # Filter currencies with deposit and withdrawal enabled on Gate.io
-        gateio_currency_info = gateio.fetch_currency(symbol)
-        if gateio_currency_info is None or not gateio_currency_info.get('depositEnable', False) or not gateio_currency_info.get('withdrawEnable', False):
-            continue
-
-        # Filter currencies with deposit and withdrawal enabled on MEXC Global
-        mexc_currency_info = mexc_global.fetch_currency(symbol)
-        if mexc_currency_info is None or not mexc_currency_info.get('depositEnable', False) or not mexc_currency_info.get('withdrawEnable', False):
-            continue
-
-        # Check if the network fee and contact address match
-        gateio_network_fee = float(gateio_currency_info['withdrawFee'])
-        mexc_network_fee = float(mexc_currency_info['withdrawFee'])
-        gateio_contact = gateio_currency_info.get('contract', '')
-        mexc_contact = mexc_currency_info.get('contract', '')
-
-        if gateio_network_fee != mexc_network_fee or gateio_contact != mexc_contact:
-            continue
-
         gateio_trade_link = "https://www.gate.io/trade/{}".format(symbol.replace("/", "_"))
         mexc_trade_link = "https://www.mexc.com/exchange/{}".format(symbol.replace("/", "_"))
 
-        data.append({
-            'symbol': symbol,
-            'gateio_price': gateio_price,
-            'mexc_price': mexc_price,
-            'arbitrage': arbitrage,
-            'gateio_trade_link': gateio_trade_link,
-            'mexc_trade_link': mexc_trade_link
-        })
+        gateio_currency_info = get_gateio_currency_info(gateio, symbol)
+        if gateio_currency_info is not None:
+            deposit_enabled = gateio_currency_info.get('depositEnable', False)
+            withdraw_enabled = gateio_currency_info.get('withdrawEnable', False)
+            contact_address = gateio_currency_info.get('contract', '')
+            network = gateio_currency_info.get('network', '')
+
+            data.append({
+                'symbol': symbol,
+                'gateio_price': gateio_price,
+                'mexc_price': mexc_price,
+                'arbitrage': arbitrage,
+                'gateio_trade_link': gateio_trade_link,
+                'mexc_trade_link': mexc_trade_link,
+                'deposit_enabled': deposit_enabled,
+                'withdraw_enabled': withdraw_enabled,
+                'contact_address': contact_address,
+                'network': network
+            })
+        else:
+            logger.warning("Currency information not found for symbol %s", symbol)
 
     # Sort data by arbitrage value
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
