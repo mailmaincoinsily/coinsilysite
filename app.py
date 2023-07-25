@@ -39,27 +39,7 @@ def index():
         logger.error(error_message)
         return render_template('error.html', error_message=error_message)
 
-    # Get deposit and withdrawal information for currencies on Gate.io
-    gateio_currencies = gateio.fetch_currencies()
-    if gateio_currencies is None:
-        error_message = "Failed to fetch currencies from Gate.io"
-        logger.error(error_message)
-        return render_template('error.html', error_message=error_message)
-
-    # Filter currencies with deposit and withdrawal enabled on Gate.io
-    gateio_currencies = {symbol: currency_info for symbol, currency_info in gateio_currencies.items() if 'depositEnable' in currency_info and 'withdrawEnable' in currency_info and currency_info['depositEnable'] and currency_info['withdrawEnable']}
-
-    # Get deposit and withdrawal information for currencies on MEXC Global
-    mexc_currencies = mexc_global.fetch_currencies()
-    if mexc_currencies is None:
-        error_message = "Failed to fetch currencies from MEXC Global"
-        logger.error(error_message)
-        return render_template('error.html', error_message=error_message)
-
-    # Filter currencies with deposit and withdrawal enabled on MEXC Global
-    mexc_currencies = {symbol: currency_info for symbol, currency_info in mexc_currencies.items() if 'depositEnable' in currency_info and 'withdrawEnable' in currency_info and currency_info['depositEnable'] and currency_info['withdrawEnable']}
-
-    common_symbols = set(gateio_tickers.keys()) & set(mexc_tickers.keys()) & set(gateio_currencies.keys()) & set(mexc_currencies.keys())
+    common_symbols = set(gateio_tickers.keys()) & set(mexc_tickers.keys())
     logger.info("Common symbols: %s", common_symbols)
 
     data = []
@@ -68,29 +48,39 @@ def index():
         mexc_price = float(mexc_tickers[symbol]['last']) if mexc_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((mexc_price - gateio_price) / gateio_price * 100, 2)
 
-        gateio_withdraw_fee = float(gateio_currencies[symbol]['withdrawFee'])
-        mexc_withdraw_fee = float(mexc_currencies[symbol]['withdrawFee'])
+        # Filter currencies with deposit and withdrawal enabled on Gate.io
+        gateio_currency_info = gateio.fetch_currency(symbol)
+        if gateio_currency_info is None or not gateio_currency_info.get('depositEnable', False) or not gateio_currency_info.get('withdrawEnable', False):
+            continue
 
-        # Calculate profit after deducting withdrawal fees
-        initial_investment = 100.0  # Your initial investment in USD or USDT
-        profit_after_fees = initial_investment * (arbitrage / 100) - gateio_withdraw_fee - mexc_withdraw_fee
+        # Filter currencies with deposit and withdrawal enabled on MEXC Global
+        mexc_currency_info = mexc_global.fetch_currency(symbol)
+        if mexc_currency_info is None or not mexc_currency_info.get('depositEnable', False) or not mexc_currency_info.get('withdrawEnable', False):
+            continue
 
-        if profit_after_fees > 0:
-            gateio_trade_link = "https://www.gate.io/trade/{}".format(symbol.replace("/", "_"))
-            mexc_trade_link = "https://www.mexc.com/exchange/{}".format(symbol.replace("/", "_"))
+        # Check if the network fee and contact address match
+        gateio_network_fee = float(gateio_currency_info['withdrawFee'])
+        mexc_network_fee = float(mexc_currency_info['withdrawFee'])
+        gateio_contact = gateio_currency_info.get('contract', '')
+        mexc_contact = mexc_currency_info.get('contract', '')
 
-            data.append({
-                'symbol': symbol,
-                'gateio_price': gateio_price,
-                'mexc_price': mexc_price,
-                'arbitrage': arbitrage,
-                'profit_after_fees': profit_after_fees,
-                'gateio_trade_link': gateio_trade_link,
-                'mexc_trade_link': mexc_trade_link
-            })
+        if gateio_network_fee != mexc_network_fee or gateio_contact != mexc_contact:
+            continue
 
-    # Sort data by profit_after_fees value
-    data.sort(key=lambda x: x['profit_after_fees'], reverse=True)
+        gateio_trade_link = "https://www.gate.io/trade/{}".format(symbol.replace("/", "_"))
+        mexc_trade_link = "https://www.mexc.com/exchange/{}".format(symbol.replace("/", "_"))
+
+        data.append({
+            'symbol': symbol,
+            'gateio_price': gateio_price,
+            'mexc_price': mexc_price,
+            'arbitrage': arbitrage,
+            'gateio_trade_link': gateio_trade_link,
+            'mexc_trade_link': mexc_trade_link
+        })
+
+    # Sort data by arbitrage value
+    data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
     # Count the number of positive and negative arbitrage opportunities
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
