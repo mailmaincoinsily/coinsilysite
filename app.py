@@ -28,7 +28,7 @@ def are_networks_matching(exchange1, symbol1, exchange2, symbol2):
     currency_info2 = exchange2.fetch_currency(symbol2)
     return currency_info1.get('network', '') == currency_info2.get('network', '')
 
-def get_arbitrage_opportunities(gateio_tickers, mexc_tickers):
+def get_arbitrage_opportunities(gateio, mexc_global, gateio_tickers, mexc_tickers):
     common_symbols = set(gateio_tickers.keys()) & set(mexc_tickers.keys())
     
     data = []
@@ -84,13 +84,11 @@ def index():
         logger.error(error_message)
         return render_template('error.html', error_message=error_message)
 
-    data = get_arbitrage_opportunities(gateio_tickers, mexc_tickers)
-    
-    # Count the number of positive and negative arbitrage opportunities
+    data = get_arbitrage_opportunities(gateio, mexc_global, gateio_tickers, mexc_tickers)
+
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
     negative_count = sum(1 for item in data if item['arbitrage'] < 0)
 
-    logger.info("Data: %s", data)
     return render_template('index.html', data=data, positive_count=positive_count, negative_count=negative_count)
 
 if __name__ == '__main__':
