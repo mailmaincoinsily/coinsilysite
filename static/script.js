@@ -169,4 +169,18 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+// script.js
+
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+  // Get references to the select elements
+  const exchange1Select = document.getElementById("exchange1");
+  const exchange2Select = document.getElementById("exchange2");
+
+  // Add event listener to the second dropdown (exchange2)
+  exchange2Select.addEventListener("change", function() {
+    // Automatically submit the form when exchange2 is selected
+    document.getElementById("arbitrageForm").submit();
+  });
+});
 
