@@ -18,17 +18,17 @@ logger.addHandler(handler)
 
 # New code for exchange configuration
 EXCHANGES = {
-    'gateio': {
+    'exchanges.gateio': {
         'name': 'Gate.io',
         'trade_base_url': 'https://www.gate.io/trade/',
         'module': 'exchanges.gateio',  # Name of the module (gateio.py) without the .py extension
     },
-    'mexc': {
+    'exchanges.mexc': {
         'name': 'MEXC',
         'trade_base_url': 'https://www.mexc.com/exchange/',
         'module': 'exchanges.mexc',
     },
-    'binance': {
+    'exchanges.binance': {
         'name': 'Binance',
         'trade_base_url': 'https://www.binance.com/en/trade/',
         'module': 'exchanges.binance',
