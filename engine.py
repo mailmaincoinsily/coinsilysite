@@ -9,12 +9,12 @@ def get_exchange_module(exchange_key):
     module_name = EXCHANGES[exchange_key]['module']
     return import_module(module_name)
 
-def calculate_arbitrage(exchange1, exchange2):
+def calculate_arbitrage(exchange1, exchange2, coingecko_price):
     exchange1_config = EXCHANGES.get(exchange1)
     exchange2_config = EXCHANGES.get(exchange2)
 
     if not exchange1_config or not exchange2_config:
-        return []
+        return [], 0, 0  # Return empty data and zero counts
 
     exchange1_module = get_exchange_module(exchange1_config['module'])
     exchange2_module = get_exchange_module(exchange2_config['module'])
@@ -60,4 +60,8 @@ def calculate_arbitrage(exchange1, exchange2):
     # Sort data by arbitrage value
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
-    return data
+    # Calculate positive and negative counts
+    positive_count = sum(1 for item in data if item['arbitrage'] > 0)
+    negative_count = sum(1 for item in data if item['arbitrage'] < 0)
+
+    return data, positive_count, negative_count
