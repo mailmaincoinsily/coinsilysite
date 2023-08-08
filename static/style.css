@@ -1,109 +1,148 @@
-/* Reset default margin and padding */
-body, h1, h2, p, ul, li {
-  margin: 0;
-  padding: 0;
-}
-
-/* Set a background color and text color for the body */
 body {
-  background-color: #f6f6f6;
-  color: #333;
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
 }
 
-/* Style the header */
-header {
-  background-color: #007bff;
-  color: #fff;
-  text-align: center;
-  padding: 15px 0;
-}
-
-/* Style the container */
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* Style the dropdown container */
-#dropdown-container {
-  margin-bottom: 20px;
+.header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-/* Style the label */
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+.header h1 {
+    color: #333;
+    font-size: 36px;
+    margin: 0;
+    padding: 20px 0;
 }
 
-/* Style the dropdown select */
-select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  cursor: pointer;
-  width: 100%;
-  transition: border-color 0.3s, box-shadow 0.3s;
+.engine-form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Add a subtle shadow on hover/focus */
-select:hover, select:focus {
-  border-color: #007bff;
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+.engine-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Style the form content */
-.form {
-  padding: 20px 0;
-  border-bottom: 1px solid #ccc;
-}
-
-/* Style the table container */
-#table-container {
-  padding: 20px 0;
-}
-
-/* Style table */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-table, th, td {
-  border: 1px solid #ddd;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-}
-
-/* Style the submit button */
-button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-/* Add responsiveness for smaller screens */
-@media screen and (max-width: 600px) {
-  .container {
+.engine-form select {
+    width: 100%;
     padding: 10px;
-  }
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.engine-form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.counts {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.count {
+    text-align: center;
+}
+
+.count .label {
+    color: #666;
+}
+
+.count .value {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.opportunities-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow: auto;
+}
+
+.opportunities-table th,
+.opportunities-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.opportunities-table th {
+    background-color: #333;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.opportunities-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.opportunities-table a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.opportunities-table a:hover {
+    text-decoration: underline;
+}
+
+.opportunities-table .arbitrage {
+    font-weight: bold;
+}
+
+.arrow-key {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 350px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.arrow-key:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #555;
+    border-radius: 50%;
+}
+
+.arrow-key:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 300px;
+    background-color: #555;
 }
