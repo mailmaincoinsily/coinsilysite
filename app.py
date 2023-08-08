@@ -13,7 +13,12 @@ def index():
 def calculate():
     exchange1 = request.form['exchange1']
     exchange2 = request.form['exchange2']
-    coingecko_price = float(request.form.get('coingecko_price'))
+    coingecko_price_input = request.form.get('coingecko_price')
+
+    try:
+        coingecko_price = float(coingecko_price_input)
+    except ValueError:
+        coingecko_price = 0.0
 
     data = calculate_arbitrage(exchange1, exchange2, coingecko_price)
 
