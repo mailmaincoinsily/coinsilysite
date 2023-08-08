@@ -155,5 +155,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });//color selection end
 
+document.addEventListener("DOMContentLoaded", function() {
+  const coinSelect = document.getElementById("coin-select");
+  
+  // Example coin options, you can replace these with your actual coin list
+  const coins = ["Bitcoin", "Ethereum", "Cardano", "Solana"];
+  
+  coins.forEach(coin => {
+    const option = document.createElement("option");
+    option.value = coin.toLowerCase(); // Use lowercase for value
+    option.textContent = coin;
+    coinSelect.appendChild(option);
+  });
+});
 
 
