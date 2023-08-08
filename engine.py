@@ -31,27 +31,29 @@ def calculate_arbitrage(exchange1, exchange2, liquidity_amount):
         exchange1_price = float(exchange1_tickers[symbol]['last'])
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
 
-        exchange1_liquidity = float(exchange1_tickers[symbol]['bidVolume'])
-        exchange2_liquidity = float(exchange2_tickers[symbol]['askVolume'])
+        # Fetch liquidity data or use default value of 0.0
+        exchange1_liquidity = float(exchange1_tickers[symbol].get('bidVolume', 0.0))
+        exchange2_liquidity = float(exchange2_tickers[symbol].get('askVolume', 0.0))
 
-        if exchange1_liquidity >= liquidity_amount and exchange2_liquidity >= liquidity_amount:
-            arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
-            exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
-            exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
+        # Calculate arbitrage and other values
+        arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
+        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
+        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
 
-            data.append({
-                'symbol': symbol,
-                'exchange1_price': exchange1_price,
-                'exchange2_price': exchange2_price,
-                'arbitrage': arbitrage,
-                'exchange1_trade_link': exchange1_trade_link,
-                'exchange2_trade_link': exchange2_trade_link,
-                'exchange1_name': exchange1_config['name'],
-                'exchange2_name': exchange2_config['name'],
-                'exchange1_liquidity': exchange1_liquidity,
-                'exchange2_liquidity': exchange2_liquidity
-            })
+        data.append({
+            'symbol': symbol,
+            'exchange1_price': exchange1_price,
+            'exchange2_price': exchange2_price,
+            'arbitrage': arbitrage,
+            'exchange1_liquidity': exchange1_liquidity,
+            'exchange2_liquidity': exchange2_liquidity,
+            'exchange1_trade_link': exchange1_trade_link,
+            'exchange2_trade_link': exchange2_trade_link,
+            'exchange1_name': exchange1_config['name'],
+            'exchange2_name': exchange2_config['name']
+        })
 
+    # Sort data by arbitrage value
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
     return data
