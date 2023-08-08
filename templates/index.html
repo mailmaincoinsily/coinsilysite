@@ -42,7 +42,7 @@
                     <td>{{ item.symbol }}</td>
                     <td>{{ item.gateio_price }}</td>
                     <td>{{ item.mexc_price }}</td>
-                    <td>{{ item.binance_price }}</td>
+                    <td>{{ item.binance_price | default('N/A') }}</td>
                     <td class="arbitrage">{{ item.arbitrage_gateio_mexc }}</td>
                     <td class="arbitrage">{{ item.arbitrage_gateio_binance }}</td>
                     <td><a href="{{ item.gateio_trade_link }}" target="_blank">GATEIO</a></td>
