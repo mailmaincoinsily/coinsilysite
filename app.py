@@ -21,7 +21,9 @@ def index():
     for symbol in common_symbols:
         gateio_price = float(gateio_tickers[symbol]['last'])
         mexc_price = float(mexc_tickers[symbol]['last']) if mexc_tickers[symbol]['last'] is not None else 0.0
-        binance_price = float(binance_tickers[symbol]['last_price'])
+        
+        # Safely get the binance price using .get() method
+        binance_price = float(binance_tickers[symbol].get('last_price', 0.0))
 
         arbitrage_gateio_mexc = round((mexc_price - gateio_price) / gateio_price * 100, 2)
         arbitrage_gateio_binance = round((binance_price - gateio_price) / gateio_price * 100, 2)
