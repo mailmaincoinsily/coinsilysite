@@ -1,9 +1,8 @@
-# binance.py
 import ccxt
 
 binance = ccxt.binance()
 
-def get_binance_data():
+def get_exchange_data():
     try:
         binance_markets = binance.load_markets()
         binance_spot_markets = {symbol: market for symbol, market in binance_markets.items() if market['spot'] and market['active']}
