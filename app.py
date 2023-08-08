@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', positive_count=0, negative_count=0)
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
