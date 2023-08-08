@@ -17,7 +17,7 @@ def calculate():
     # Check if liquidityAmount field is not empty and is a valid numeric value
     if liquidity_amount_str and liquidity_amount_str.replace('.', '', 1).isdigit():
         liquidity_amount = float(liquidity_amount_str)
-        data = calculate_arbitrage(exchange1, exchange2)
+        data = calculate_arbitrage(exchange1, exchange2, liquidity_amount)
         positive_count = 0
         negative_count = 0
         valid_arbitrages = []
