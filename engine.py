@@ -33,12 +33,9 @@ def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchang
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
 
-        # Fetch Coingecko price for the same pair
-        coingecko_price = get_coingecko_price(symbol)
-
         # Calculate price differences
-        exchange1_price_diff = exchange1_price - coingecko_price
-        exchange2_price_diff = exchange2_price - coingecko_price
+        exchange1_price_diff = exchange1_price - exchange1_coingecko_price
+        exchange2_price_diff = exchange2_price - exchange2_coingecko_price
 
         exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
         exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
@@ -48,7 +45,6 @@ def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchang
             'exchange1_price': exchange1_price,
             'exchange2_price': exchange2_price,
             'arbitrage': arbitrage,
-            'coingecko_price': coingecko_price,
             'exchange1_price_diff': exchange1_price_diff,
             'exchange2_price_diff': exchange2_price_diff,
             'exchange1_trade_link': exchange1_trade_link,
