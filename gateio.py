@@ -2,7 +2,7 @@ import ccxt
 
 gateio = ccxt.gateio()
 
-def get_gateio_data():
+def get_exchange_data():
     try:
         gateio_markets = gateio.load_markets()
         gateio_spot_markets = {symbol: market for symbol, market in gateio_markets.items() if market['spot'] and market['active']}
