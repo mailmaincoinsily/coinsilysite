@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from engine import calculate_arbitrage
-from coingecko import coingecko_function  # Import the coingecko function here
+from coingecko import get_coingecko_price  # Import the coingecko function here
 
 app = Flask(__name__)
 
