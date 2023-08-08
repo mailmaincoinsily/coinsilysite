@@ -7,6 +7,10 @@
 <body>
     <h1>Arbitrage Opportunities</h1>
 
+    <div class="coingecko-price">
+        <h3>Coingecko Price: {{ coingecko_price }}</h3>
+    </div>
+
     <div class="engine">
         <h2>Arbitrage Engine</h2>
         <form action="/calculate" method="post">
@@ -23,12 +27,6 @@
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
                 {% endfor %}
             </select>
-            <br>
-            <label for="coingecko_price">Coingecko Price:</label>
-            <input type="text" name="coingecko_price" id="coingecko_price" value="{{ coingecko_price }}">
-            {% if coingecko_price_error %}
-                <p class="error">{{ coingecko_price_error }}</p>
-            {% endif %}
             <br>
             <input type="submit" value="Calculate Arbitrage">
         </form>
