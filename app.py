@@ -17,7 +17,7 @@ def calculate():
     exchange1_coingecko_price = coingecko_data['exchange1_coingecko_price']
     exchange2_coingecko_price = coingecko_data['exchange2_coingecko_price']
 
-    data, positive_count, negative_count = calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchange2_coingecko_price)
+    data, positive_count, negative_count = calculate_arbitrage(exchange1, exchange2)
 
     exchange1_name = get_exchange_name(exchange1)
     exchange2_name = get_exchange_name(exchange2)
