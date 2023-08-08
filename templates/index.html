@@ -7,10 +7,6 @@
 <body>
     <h1>Arbitrage Opportunities</h1>
 
-    <div class="coingecko-price">
-        <h3>Coingecko Price: {{ coingecko_price }}</h3>
-    </div>
-
     <div class="engine">
         <h2>Arbitrage Engine</h2>
         <form action="/calculate" method="post">
@@ -30,6 +26,11 @@
             <br>
             <input type="submit" value="Calculate Arbitrage">
         </form>
+    </div>
+
+    <div class="coingecko">
+        <h2>Coingecko Price</h2>
+        <p>{{ coingecko_price }}</p>
     </div>
 
     <div class="counts">
