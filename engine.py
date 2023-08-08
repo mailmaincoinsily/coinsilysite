@@ -3,25 +3,29 @@ from gateio import get_gateio_data
 from mexc import get_mexc_data
 # Import other exchange modules if needed
 
+def get_exchange_name(exchange_key):
+    # Example: exchange_key 'binance' -> Display name 'Binance'
+    return exchange_key.capitalize()
+
 def calculate_arbitrage(exchange1, exchange2):
     # Retrieve ticker data for the selected exchanges
     if exchange1 == 'gateio':
         exchange1_tickers = get_gateio_data()
-        exchange1_name = 'Gate.io'
+        exchange1_name = get_exchange_name(exchange1)
         exchange1_trade_base_url = "https://www.gate.io/trade/"
     elif exchange1 == 'mexc':
         exchange1_tickers = get_mexc_data()
-        exchange1_name = 'MEXC'
+        exchange1_name = get_exchange_name(exchange1)
         exchange1_trade_base_url = "https://www.mexc.com/exchange/"
     # Add more cases for other exchanges if needed
 
     if exchange2 == 'gateio':
         exchange2_tickers = get_gateio_data()
-        exchange2_name = 'Gate.io'
+        exchange2_name = get_exchange_name(exchange2)
         exchange2_trade_base_url = "https://www.gate.io/trade/"
     elif exchange2 == 'mexc':
         exchange2_tickers = get_mexc_data()
-        exchange2_name = 'MEXC'
+        exchange2_name = get_exchange_name(exchange2)
         exchange2_trade_base_url = "https://www.mexc.com/exchange/"
     # Add more cases for other exchanges if needed
 
