@@ -169,17 +169,16 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// script.js
+// Update the existing script.js to remove the previous code and add the new code below
 
 // Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", function() {
-  // Get references to the select elements
-  const exchange1Select = document.getElementById("exchange1");
+  // Get reference to the second dropdown (exchange2)
   const exchange2Select = document.getElementById("exchange2");
 
-  // Add event listener to the second dropdown (exchange2)
+  // Add event listener to the exchange2 dropdown
   exchange2Select.addEventListener("change", function() {
-    // Automatically submit the form when exchange2 is selected
+    // Automatically submit the form
     document.getElementById("arbitrageForm").submit();
   });
 });
