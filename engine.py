@@ -3,10 +3,10 @@ from config import EXCHANGES
 from coingecko import get_coingecko_price
 
 def get_exchange_name(exchange_key):
-    return EXCHANGES[exchange_key]['name']
+    return EXCHANGES.get(exchange_key, {}).get('name', '')
 
 def get_exchange_module(exchange_key):
-    module_name = EXCHANGES[exchange_key]['module']
+    module_name = EXCHANGES.get(exchange_key, {}).get('module', '')
     return import_module(module_name)
 
 def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchange2_coingecko_price):
@@ -29,13 +29,19 @@ def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchang
 
     data = []
     for symbol in common_symbols:
-        exchange1_price = float(exchange1_tickers[symbol]['last'])
-        exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
+        exchange1_price = float(exchange1_tickers.get(symbol, {}).get('last', 0.0))
+        exchange2_price = float(exchange2_tickers.get(symbol, {}).get('last', 0.0))
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
 
-        # Calculate price differences
-        exchange1_price_diff = exchange1_price - exchange1_coingecko_price
-        exchange2_price_diff = exchange2_price - exchange2_coingecko_price
+        if exchange1_coingecko_price is not None:
+            exchange1_price_diff = exchange1_price - exchange1_coingecko_price
+        else:
+            exchange1_price_diff = None
+
+        if exchange2_coingecko_price is not None:
+            exchange2_price_diff = exchange2_price - exchange2_coingecko_price
+        else:
+            exchange2_price_diff = None
 
         exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
         exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
@@ -53,10 +59,8 @@ def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchang
             'exchange2_name': exchange2_config['name']
         })
 
-    # Sort data by arbitrage value
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
-    # Calculate positive and negative counts
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
     negative_count = sum(1 for item in data if item['arbitrage'] < 0)
 
