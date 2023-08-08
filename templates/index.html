@@ -1,63 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Arbitrage Opportunities</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Arbitrage Engine</title>
 </head>
 <body>
-    <h1>Arbitrage Opportunities</h1>
+    <h1>Arbitrage Engine</h1>
+    
+    <form action="/calculate" method="post">
+        <label for="exchange1">Select Exchange 1:</label>
+        <select name="exchange1" id="exchange1">
+            <option value="gateio">Gate.io</option>
+            <option value="mexc">MEXC</option>
+            <!-- Add more options for other exchanges if needed -->
+        </select>
+        <br>
+        <label for="exchange2">Select Exchange 2:</label>
+        <select name="exchange2" id="exchange2">
+            <option value="gateio">Gate.io</option>
+            <option value="mexc">MEXC</option>
+            <!-- Add more options for other exchanges if needed -->
+        </select>
+        <br>
+        <input type="submit" value="Calculate Arbitrage">
+    </form>
 
-    <div class="counts">
-        <div class="count">
-            <span class="label">Positive Count (Gate.io-MEXC):</span>
-            <span class="value">{{ positive_count_gateio_mexc }}</span>
-        </div>
-        <div class="count">
-            <span class="label">Negative Count (Gate.io-MEXC):</span>
-            <span class="value">{{ negative_count_gateio_mexc }}</span>
-        </div>
-        <div class="count">
-            <span class="label">Total Opportunities (Gate.io-MEXC):</span>
-            <span class="value">{{ positive_count_gateio_mexc + negative_count_gateio_mexc }}</span>
-        </div>
-    </div>
-
+    {% if data %}
     <table>
         <thead>
             <tr>
                 <th>Symbol</th>
-                <th>Gate.io Price</th>
-                <th>MEXC Global Price</th>
-                <th>Binance Price</th>
-                <th>Arbitrage (Gate.io-MEXC) (%)</th>
-                <th>Arbitrage (Gate.io-Binance) (%)</th>
-                <th>Gateio Trade Link</th>
-                <th>MEXC Trade Link</th>
-                <th>Binance Trade Link</th>
+                <th>Exchange 1 Price</th>
+                <th>Exchange 2 Price</th>
+                <th>Arbitrage (%)</th>
+                <th>Exchange 1 Trade Link</th>
+                <th>Exchange 2 Trade Link</th>
             </tr>
         </thead>
         <tbody>
             {% for item in data %}
                 <tr>
                     <td>{{ item.symbol }}</td>
-                    <td>{{ item.gateio_price }}</td>
-                    <td>{{ item.mexc_price }}</td>
-                    <td>{{ item.binance_price | default('N/A') }}</td>
-                    <td class="arbitrage">{{ item.arbitrage_gateio_mexc }}</td>
-                    <td class="arbitrage">{{ item.arbitrage_gateio_binance }}</td>
-                    <td><a href="{{ item.gateio_trade_link }}" target="_blank">GATEIO</a></td>
-                    <td><a href="{{ item.mexc_trade_link }}" target="_blank">MEXC</a></td>
-                    <td><a href="{{ item.binance_trade_link }}" target="_blank">BINANCE</a></td>
+                    <td>{{ item.exchange1_price }}</td>
+                    <td>{{ item.exchange2_price }}</td>
+                    <td class="arbitrage">{{ item.arbitrage }}</td>
+                    <td><a href="{{ item.exchange1_trade_link }}" target="_blank">Exchange 1</a></td>
+                    <td><a href="{{ item.exchange2_trade_link }}" target="_blank">Exchange 2</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div id="arrow-key"></div>
-    
-    <div id="color-picker">
-        <input type="color" id="selected-color" value="#ff0000">
-    </div>
-    
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% endif %}
+
 </body>
 </html>
