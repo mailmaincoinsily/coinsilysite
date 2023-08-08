@@ -33,5 +33,12 @@ EXCHANGES = {
         'trade_base_url': 'https://www.binance.com/en/trade/',
         'module': 'exchanges.binance',
     },
+    },
+'exchanges.bybit': {
+    'name': 'Bybit',
+    'trade_base_url': 'https://www.bybit.com/trade/',
+    'module': 'exchanges.bybit'
+}
+
     # Add more exchanges and their details here
 }
