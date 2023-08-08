@@ -8,7 +8,7 @@ def get_exchange_module(exchange_key):
     module_name = EXCHANGES[exchange_key]['module']
     return import_module(module_name)
 
-def calculate_arbitrage(exchange1, exchange2, liquidity_amount):
+def calculate_arbitrage(exchange1, exchange2, liquidity_amount):  # Add liquidity_amount parameter
     exchange1_config = EXCHANGES.get(exchange1)
     exchange2_config = EXCHANGES.get(exchange2)
 
@@ -30,28 +30,28 @@ def calculate_arbitrage(exchange1, exchange2, liquidity_amount):
     for symbol in common_symbols:
         exchange1_price = float(exchange1_tickers[symbol]['last'])
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
-
-        # Fetch liquidity data or use default value of 0.0
-        exchange1_liquidity = float(exchange1_tickers[symbol].get('bidVolume', 0.0))
-        exchange2_liquidity = float(exchange2_tickers[symbol].get('askVolume', 0.0))
-
-        # Calculate arbitrage and other values
+        
+        # Calculate liquidity
+        exchange1_liquidity = float(exchange1_tickers[symbol]['bidVolume']) if exchange1_tickers[symbol]['bidVolume'] is not None else 0.0
+        exchange2_liquidity = float(exchange2_tickers[symbol]['askVolume']) if exchange2_tickers[symbol]['askVolume'] is not None else 0.0
+        
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
+
         exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
         exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
 
-        data.append({
-            'symbol': symbol,
-            'exchange1_price': exchange1_price,
-            'exchange2_price': exchange2_price,
-            'arbitrage': arbitrage,
-            'exchange1_liquidity': exchange1_liquidity,
-            'exchange2_liquidity': exchange2_liquidity,
-            'exchange1_trade_link': exchange1_trade_link,
-            'exchange2_trade_link': exchange2_trade_link,
-            'exchange1_name': exchange1_config['name'],
-            'exchange2_name': exchange2_config['name']
-        })
+        # Check if liquidity is sufficient
+        if exchange1_liquidity >= liquidity_amount and exchange2_liquidity >= liquidity_amount:
+            data.append({
+                'symbol': symbol,
+                'exchange1_price': exchange1_price,
+                'exchange2_price': exchange2_price,
+                'arbitrage': arbitrage,
+                'exchange1_trade_link': exchange1_trade_link,
+                'exchange2_trade_link': exchange2_trade_link,
+                'exchange1_name': exchange1_config['name'],
+                'exchange2_name': exchange2_config['name']
+            })
 
     # Sort data by arbitrage value
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
