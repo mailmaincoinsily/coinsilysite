@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arbitrage Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Arbitrage Opportunities</h1>
+
+    <div class="counts">
+        <div class="count">
+            <span class="label">Positive Count (Gate.io-MEXC):</span>
+            <span class="value">{{ positive_count_gateio_mexc }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Negative Count (Gate.io-MEXC):</span>
+            <span class="value">{{ negative_count_gateio_mexc }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Total Opportunities (Gate.io-MEXC):</span>
+            <span class="value">{{ positive_count_gateio_mexc + negative_count_gateio_mexc }}</span>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Gate.io Price</th>
+                <th>MEXC Global Price</th>
+                <th>Binance Price</th>
+                <th>Arbitrage (Gate.io-MEXC) (%)</th>
+                <th>Arbitrage (Gate.io-Binance) (%)</th>
+                <th>Gateio Trade Link</th>
+                <th>MEXC Trade Link</th>
+                <th>Binance Trade Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.gateio_price }}</td>
+                    <td>{{ item.mexc_price }}</td>
+                    <td>{{ item.binance_price }}</td>
+                    <td class="arbitrage">{{ item.arbitrage_gateio_mexc }}</td>
+                    <td class="arbitrage">{{ item.arbitrage_gateio_binance }}</td>
+                    <td><a href="{{ item.gateio_trade_link }}" target="_blank">GATEIO</a></td>
+                    <td><a href="{{ item.mexc_trade_link }}" target="_blank">MEXC</a></td>
+                    <td><a href="{{ item.binance_trade_link }}" target="_blank">BINANCE</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="arrow-key"></div>
+    
+    <div id="color-picker">
+        <input type="color" id="selected-color" value="#ff0000">
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
