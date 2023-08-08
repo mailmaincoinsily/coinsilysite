@@ -13,7 +13,8 @@ def index():
 def calculate():
     exchange1 = request.form['exchange1']
     exchange2 = request.form['exchange2']
-    coingecko_price = get_coingecko_price()  # Get the Coingecko price using the function
+
+    coingecko_price = get_coingecko_price(symbol=exchange1)  # Fetch Coingecko price using the symbol of the first exchange
 
     data = calculate_arbitrage(exchange1, exchange2, coingecko_price)
 
@@ -23,8 +24,6 @@ def calculate():
     exchange1_name = get_exchange_name(exchange1)
     exchange2_name = get_exchange_name(exchange2)
 
-    coingecko_data = get_coingecko_price()  # Call the coingecko function
-
     return render_template(
         'index.html',
         positive_count=positive_count,
@@ -33,8 +32,7 @@ def calculate():
         exchange1_name=exchange1_name,
         exchange2_name=exchange2_name,
         exchanges=EXCHANGES,
-        coingecko_price=coingecko_price,
-        coingecko_data=coingecko_data
+        coingecko_price=coingecko_price
     )
 
 if __name__ == '__main__':
