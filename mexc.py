@@ -2,7 +2,7 @@ import ccxt
 
 mexc = ccxt.mexc()
 
-def get_mexc_data():
+def get_exchange_data():
     try:
         mexc_markets = mexc.load_markets()
         mexc_spot_markets = {symbol: market for symbol, market in mexc_markets.items() if market['spot'] and market['active']}
