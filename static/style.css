@@ -131,3 +131,24 @@ td.highlight-red {
     cursor: pointer;
     z-index: 9999;
 }
+/* Style the select element */
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Style the options within the dropdown */
+select option {
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Style the selected option */
+select option:checked {
+  background-color: #f0f0f0;
+}
+
