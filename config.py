@@ -1,3 +1,6 @@
+# config.py
+
+# Existing code for logging configuration
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
@@ -12,3 +15,23 @@ handler.setLevel(logging.ERROR)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+
+# New code for exchange configuration
+EXCHANGES = {
+    'gateio': {
+        'name': 'Gate.io',
+        'trade_base_url': 'https://www.gate.io/trade/',
+        'module': 'gateio',  # Name of the module (gateio.py) without the .py extension
+    },
+    'mexc': {
+        'name': 'MEXC',
+        'trade_base_url': 'https://www.mexc.com/exchange/',
+        'module': 'mexc',
+    },
+    'binance': {
+        'name': 'Binance',
+        'trade_base_url': 'https://www.binance.com/en/trade/',
+        'module': 'binance',
+    },
+    # Add more exchanges and their details here
+}
