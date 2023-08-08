@@ -24,8 +24,8 @@
                 {% endfor %}
             </select>
             <br>
-            <label for="liquidityAmount">Enter Liquidity Amount:</label>
-            <input type="number" name="liquidityAmount" id="liquidityAmount" min="0" step="0.01" placeholder="Enter liquidity amount">
+            <label for="liquidityAmount">Liquidity Amount:</label>
+            <input type="number" name="liquidityAmount" id="liquidityAmount">
             <br>
             <input type="submit" value="Calculate Arbitrage">
         </form>
@@ -53,10 +53,10 @@
                 <th>{{ exchange1_name }} Price</th>
                 <th>{{ exchange2_name }} Price</th>
                 <th>Arbitrage (%)</th>
-                <th>{{ exchange1_name }} Trade Link</th>
-                <th>{{ exchange2_name }} Trade Link</th>
                 <th>{{ exchange1_name }} Liquidity</th>
                 <th>{{ exchange2_name }} Liquidity</th>
+                <th>{{ exchange1_name }} Trade Link</th>
+                <th>{{ exchange2_name }} Trade Link</th>
             </tr>
         </thead>
         <tbody>
@@ -66,10 +66,10 @@
                     <td>{{ item.exchange1_price }}</td>
                     <td>{{ item.exchange2_price }}</td>
                     <td class="arbitrage">{{ item.arbitrage }}</td>
-                    <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
-                    <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
                     <td>{{ item.exchange1_liquidity }}</td>
                     <td>{{ item.exchange2_liquidity }}</td>
+                    <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
+                    <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>
