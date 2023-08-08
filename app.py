@@ -13,10 +13,11 @@ def index():
 def calculate():
     exchange1 = request.form['exchange1']
     exchange2 = request.form['exchange2']
-    coingecko_data = get_coingecko_price(exchange1, exchange2)  # Fetch Coingecko price dynamically
-    coingecko_price = coingecko_data['coingecko_price']  # Extract Coingecko price from data
+    coingecko_data = get_coingecko_price(exchange1, exchange2)  # Fetch Coingecko prices dynamically
+    exchange1_coingecko_price = coingecko_data['exchange1_coingecko_price']
+    exchange2_coingecko_price = coingecko_data['exchange2_coingecko_price']
 
-    data = calculate_arbitrage(exchange1, exchange2, coingecko_price)
+    data = calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchange2_coingecko_price)
 
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
     negative_count = sum(1 for item in data if item['arbitrage'] < 0)
@@ -32,8 +33,8 @@ def calculate():
         exchange1_name=exchange1_name,
         exchange2_name=exchange2_name,
         exchanges=EXCHANGES,
-        coingecko_price=coingecko_price,
-        coingecko_data=coingecko_data
+        exchange1_coingecko_price=exchange1_coingecko_price,
+        exchange2_coingecko_price=exchange2_coingecko_price,
     )
 
 if __name__ == '__main__':
