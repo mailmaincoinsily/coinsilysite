@@ -14,7 +14,11 @@ def calculate():
 
     data = calculate_arbitrage(exchange1, exchange2)
     
-    return render_template('index.html', data=data)
+    # Count the number of positive and negative arbitrage opportunities
+    positive_count = sum(1 for item in data if item['arbitrage'] > 0)
+    negative_count = sum(1 for item in data if item['arbitrage'] < 0)
+    
+    return render_template('index.html', positive_count=positive_count, negative_count=negative_count, data=data)
 
 if __name__ == '__main__':
     app.run()
