@@ -56,7 +56,9 @@ def calculate_arbitrage(exchange1, exchange2, exchange1_coingecko_price, exchang
             'exchange1_trade_link': exchange1_trade_link,
             'exchange2_trade_link': exchange2_trade_link,
             'exchange1_name': exchange1_config['name'],
-            'exchange2_name': exchange2_config['name']
+            'exchange2_name': exchange2_config['name'],
+            'exchange1_coingecko_price': exchange1_coingecko_price,
+            'exchange2_coingecko_price': exchange2_coingecko_price,
         })
 
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
