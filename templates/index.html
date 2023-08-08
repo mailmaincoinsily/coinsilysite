@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Arbitrage Engine</title>
+    <title>Arbitrage Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Arbitrage Engine</h1>
-    
-    <form action="/calculate" method="post">
-        <label for="exchange1">Select Exchange 1:</label>
-        <select name="exchange1" id="exchange1">
-            <option value="gateio">Gate.io</option>
-            <option value="mexc">MEXC</option>
-            <!-- Add more options for other exchanges if needed -->
-        </select>
-        <br>
-        <label for="exchange2">Select Exchange 2:</label>
-        <select name="exchange2" id="exchange2">
-            <option value="gateio">Gate.io</option>
-            <option value="mexc">MEXC</option>
-            <!-- Add more options for other exchanges if needed -->
-        </select>
-        <br>
-        <input type="submit" value="Calculate Arbitrage">
-    </form>
+    <h1>Arbitrage Opportunities</h1>
 
-    {% if data %}
+    <div class="engine">
+        <h2>Arbitrage Engine</h2>
+        <form action="/calculate" method="post">
+            <label for="exchange1">Select Exchange 1:</label>
+            <select name="exchange1" id="exchange1">
+                <option value="gateio">Gate.io</option>
+                <option value="mexc">MEXC</option>
+                <!-- Add more options for other exchanges if needed -->
+            </select>
+            <br>
+            <label for="exchange2">Select Exchange 2:</label>
+            <select name="exchange2" id="exchange2">
+                <option value="gateio">Gate.io</option>
+                <option value="mexc">MEXC</option>
+                <!-- Add more options for other exchanges if needed -->
+            </select>
+            <br>
+            <input type="submit" value="Calculate Arbitrage">
+        </form>
+    </div>
+
+    <div class="counts">
+        <div class="count">
+            <span class="label">Positive Count:</span>
+            <span class="value">{{ positive_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Negative Count:</span>
+            <span class="value">{{ negative_count }}</span>
+        </div>
+        <div class="count">
+            <span class="label">Total Opportunities:</span>
+            <span class="value">{{ positive_count + negative_count }}</span>
+        </div>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -49,7 +67,13 @@
             {% endfor %}
         </tbody>
     </table>
-    {% endif %}
 
+    <div id="arrow-key"></div>
+    
+    <div id="color-picker">
+        <input type="color" id="selected-color" value="#ff0000">
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
