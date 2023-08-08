@@ -30,6 +30,7 @@ def calculate():
         exchange1_name=exchange1_name,
         exchange2_name=exchange2_name,
         exchanges=EXCHANGES,
+        coingecko_price=coingecko_price,  # Pass the Coingecko price to the template
         exchange1_coingecko_price=exchange1_coingecko_price,
         exchange2_coingecko_price=exchange2_coingecko_price,
     )
