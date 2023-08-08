@@ -1,7 +1,7 @@
 # engine.py
 from gateio import get_gateio_data
 from mexc import get_mexc_data
-# Import other exchange modules if needed
+from binance import get_binance_data
 
 def get_exchange_name(exchange_key):
     # Example: exchange_key 'binance' -> Display name 'Binance'
@@ -17,6 +17,10 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange1_tickers = get_mexc_data()
         exchange1_name = get_exchange_name(exchange1)
         exchange1_trade_base_url = "https://www.mexc.com/exchange/"
+    elif exchange1 == 'binance':
+        exchange1_tickers = get_binance_data()
+        exchange1_name = get_exchange_name(exchange1)
+        exchange1_trade_base_url = "https://www.binance.com/en/trade/"
     # Add more cases for other exchanges if needed
 
     if exchange2 == 'gateio':
@@ -27,6 +31,10 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange2_tickers = get_mexc_data()
         exchange2_name = get_exchange_name(exchange2)
         exchange2_trade_base_url = "https://www.mexc.com/exchange/"
+    elif exchange2 == 'binance':
+        exchange2_tickers = get_binance_data()
+        exchange2_name = get_exchange_name(exchange2)
+        exchange2_trade_base_url = "https://www.binance.com/en/trade/"
     # Add more cases for other exchanges if needed
 
     common_symbols = set(exchange1_tickers.keys()) & set(exchange2_tickers.keys())
