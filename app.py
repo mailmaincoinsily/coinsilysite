@@ -18,7 +18,7 @@ def calculate():
     positive_count = sum(1 for item in data if item['arbitrage'] > 0)
     negative_count = sum(1 for item in data if item['arbitrage'] < 0)
     
-    return render_template('index.html', positive_count=positive_count, negative_count=negative_count, data=data)
+    return render_template('index.html', positive_count=positive_count, negative_count=negative_count, data=data, exchange1=exchange1, exchange2=exchange2)
 
 if __name__ == '__main__':
     app.run()
