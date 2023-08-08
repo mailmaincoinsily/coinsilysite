@@ -12,18 +12,16 @@
         <form action="/calculate" method="post">
             <label for="exchange1">Select Exchange 1:</label>
             <select name="exchange1" id="exchange1">
-                <option value="gateio">Gate.io</option>
-                <option value="mexc">MEXC</option>
-                <option value="binance">Binance</option>
-                <!-- Add more options for other exchanges if needed -->
+                {% for exchange_key, exchange_data in exchanges.items() %}
+                    <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
+                {% endfor %}
             </select>
             <br>
             <label for="exchange2">Select Exchange 2:</label>
             <select name="exchange2" id="exchange2">
-                <option value="gateio">Gate.io</option>
-                <option value="mexc">MEXC</option>
-                <option value="binance">Binance</option>
-                <!-- Add more options for other exchanges if needed -->
+                {% for exchange_key, exchange_data in exchanges.items() %}
+                    <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
+                {% endfor %}
             </select>
             <br>
             <input type="submit" value="Calculate Arbitrage">
