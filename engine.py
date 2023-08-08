@@ -9,7 +9,7 @@ def get_exchange_module(exchange_key):
     module_name = EXCHANGES.get(exchange_key, {}).get('module', '')
     return import_module(module_name)
 
-def calculate_arbitrage(exchange1_config, exchange2_config):
+def calculate_arbitrage(exchange1, exchange2):
     exchange1_config = EXCHANGES.get(exchange1)
     exchange2_config = EXCHANGES.get(exchange2)
 
