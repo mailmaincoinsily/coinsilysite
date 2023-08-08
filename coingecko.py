@@ -1,10 +1,20 @@
+# coingecko.py
+
 from pycoingecko import CoinGeckoAPI
 
 coingecko = CoinGeckoAPI()
 
-def get_coingecko_price(symbol):
+def get_coingecko_price(exchange1, exchange2):
     try:
-        coingecko_price = coingecko.get_price(ids=symbol, vs_currencies='usd')[symbol]['usd']
-        return coingecko_price
+        exchange1_coingecko_price = coingecko.get_price(ids=exchange1, vs_currencies='usd')[exchange1]['usd']
+        exchange2_coingecko_price = coingecko.get_price(ids=exchange2, vs_currencies='usd')[exchange2]['usd']
+        
+        return {
+            'exchange1_coingecko_price': exchange1_coingecko_price,
+            'exchange2_coingecko_price': exchange2_coingecko_price
+        }
     except Exception as e:
-        return None  # Handle exception gracefully or set a default value
+        return {
+            'exchange1_coingecko_price': None,
+            'exchange2_coingecko_price': None
+        }  # Handle exception gracefully or set default values
