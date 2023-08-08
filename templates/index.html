@@ -49,7 +49,9 @@
                 <th>Symbol</th>
                 <th>{{ exchange1_name }} Price</th>
                 <th>{{ exchange2_name }} Price</th>
-                <th>Coingecko Price</th> <!-- New column for Coingecko price -->
+                <th>Coingecko Price</th>
+                <th>{{ exchange1_name }} Price Difference</th>
+                <th>{{ exchange2_name }} Price Difference</th>
                 <th>Arbitrage (%)</th>
                 <th>{{ exchange1_name }} Trade Link</th>
                 <th>{{ exchange2_name }} Trade Link</th>
@@ -61,7 +63,9 @@
                     <td>{{ item.symbol }}</td>
                     <td>{{ item.exchange1_price }}</td>
                     <td>{{ item.exchange2_price }}</td>
-                    <td>{{ coingecko_price }}</td> <!-- Coingecko price for each cryptocurrency pair -->
+                    <td>{{ item.coingecko_price }}</td>
+                    <td>{{ item.exchange1_price_diff }}</td>
+                    <td>{{ item.exchange2_price_diff }}</td>
                     <td class="arbitrage">{{ item.arbitrage }}</td>
                     <td><a href="{{ item.exchange1_trade_link }}" target="_blank">{{ item.exchange1_name }}</a></td>
                     <td><a href="{{ item.exchange2_trade_link }}" target="_blank">{{ item.exchange2_name }}</a></td>
