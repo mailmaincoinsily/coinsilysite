@@ -24,12 +24,18 @@ def index():
             data=data,
             exchange1_name=exchange1_name,
             exchange2_name=exchange2_name,
-            exchanges=EXCHANGES,  # Pass the correct EXCHANGES dictionary here
+            exchanges=EXCHANGES,
             coingecko_price=coingecko_price,
-            coingecko_data=coingecko_data  # Pass the coingecko data to the template
+            coingecko_data=coingecko_data
         )
 
-    return render_template('index.html', exchanges=EXCHANGES)  # Pass the correct EXCHANGES dictionary here
+    # If the request method is not 'POST', provide default values
+    return render_template(
+        'index.html',
+        exchanges=EXCHANGES,
+        positive_count=0,
+        negative_count=0
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
