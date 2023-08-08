@@ -131,3 +131,37 @@ td.highlight-red {
     cursor: pointer;
     z-index: 9999;
 }
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.exchange-dropdown {
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block; /* Add this line */
+}
+
+.exchange-dropdown select {
+  width: 150px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: block; /* Add this line */
+  margin: 0 auto; /* Add this line */
+}
+
+.exchange-dropdown select:focus {
+  outline: none;
+}
+
+.exchange-dropdown select::-ms-expand {
+  display: none;
+}
