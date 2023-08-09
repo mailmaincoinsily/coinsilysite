@@ -35,7 +35,7 @@ EXCHANGES = {
     },
     'exchanges.bybit': {
         'name': 'Bybit',
-        'trade_base_url': 'https://www.bybit.com/en-US/trade/',
+        'trade_base_url': 'https://www.bybit.com/trade/',
         'module': 'exchanges.bybit'
     }
     # Add more exchanges and their details here
