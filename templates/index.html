@@ -10,14 +10,14 @@
     <div class="engine">
         <h2>Calculation Engine</h2>
         <form action="/calculate" method="post">
-            <label for="exchange1">Select Exchange 1:</label>
+            <label for="exchange1"></label>
             <select name="exchange1" id="exchange1">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
                 {% endfor %}
             </select>
             <br>
-            <label for="exchange2">Select Exchange 2:</label>
+            <label for="exchange2">TO</label>
             <select name="exchange2" id="exchange2">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
