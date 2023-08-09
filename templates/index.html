@@ -3,6 +3,7 @@
 <head>
     <title>Guaranteed Profit Opportunities</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <h1>Guaranteed Profit Opportunities</h1>
@@ -17,7 +18,7 @@
                 {% endfor %}
             </select>
             <br>
-            <label for="exchange2">TO</label>
+            <label for="exchange2"><i class="far fa-exchange-alt fa-rotate-90"></i></label>
             <select name="exchange2" id="exchange2">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
