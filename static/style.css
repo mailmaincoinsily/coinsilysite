@@ -132,17 +132,97 @@ td.highlight-red {
     z-index: 9999;
 }
 
-
-/* Add this CSS to style the center-aligned dropdown */
-.center-dropdown {
+.engine {
     text-align: center;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-.center-dropdown select {
-    padding: 8px;
+.engine form {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto; /* Center-align the form */
+}
+
+.engine label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.engine select {
+    padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.engine input[type="submit"] {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #0366d6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.engine input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#arrow-key {
+    /* CSS for arrow key remains unchanged */
+}
+
+#color-picker {
+    /* CSS for color picker remains unchanged */
+}
+
+/* Centering Dropdowns */
+.center-dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.engine {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.engine form {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto; /* Center-align the form */
+}
+.engine label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.engine select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+}
+.engine input[type="submit"] {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #0366d6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.engine input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
