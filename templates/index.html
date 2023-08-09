@@ -20,7 +20,7 @@
                 {% endfor %}
             </select>
             <br>
-            <label for="exchange2"><i class="far fa-exchange-alt fa-rotate-90"></i></label>
+            <label for="exchange2"><i class="fas fa-home"></i></label>
             <select name="exchange2" id="exchange2">
                 {% for exchange_key, exchange_data in exchanges.items() %}
                     <option value="{{ exchange_key }}">{{ exchange_data['name'] }}</option>
