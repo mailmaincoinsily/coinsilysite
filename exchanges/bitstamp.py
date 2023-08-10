@@ -1,6 +1,6 @@
 import ccxt
 
-def get_bitstamp_data():
+def get_exchange_data():
     bitstamp = ccxt.bitstamp()
     try:
         bitstamp_markets = bitstamp.load_markets()
