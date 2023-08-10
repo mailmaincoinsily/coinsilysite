@@ -1,6 +1,6 @@
 import ccxt
 
-def get_kraken_data():
+def get_exchange_data():
     kraken = ccxt.kraken()
     try:
         kraken_markets = kraken.load_markets()
