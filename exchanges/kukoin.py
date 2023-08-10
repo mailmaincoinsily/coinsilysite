@@ -1,7 +1,6 @@
 import ccxt
-
+kukoin = ccxt.kucoin()
 def get_kukoin_data():
-    kukoin = ccxt.kucoin()
     try:
         kukoin_markets = kukoin.load_markets()
         kukoin_spot_markets = {symbol: market for symbol, market in kukoin_markets.items() if market['spot'] and market['active']}
