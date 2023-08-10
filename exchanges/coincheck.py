@@ -1,6 +1,6 @@
 import ccxt
 
-def get_coincheck_data():
+def get_exchange_data():
     coincheck = ccxt.coincheck()
     try:
         coincheck_markets = coincheck.load_markets()
