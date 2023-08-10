@@ -1,6 +1,6 @@
 import ccxt
 
-def get_exmo_data():
+def get_exchange_data():
     exmo = ccxt.exmo()
     try:
         exmo_markets = exmo.load_markets()
