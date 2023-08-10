@@ -1,6 +1,6 @@
 import ccxt
 
-def get_korbit_data():
+def get_exchange_data():
     korbit = ccxt.korbit()
     try:
         korbit_markets = korbit.load_markets()
