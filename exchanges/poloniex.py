@@ -1,6 +1,6 @@
 import ccxt
 
-def get_poloniex_data():
+def get_exchange_data():
     poloniex = ccxt.poloniex()
     try:
         poloniex_markets = poloniex.load_markets()
