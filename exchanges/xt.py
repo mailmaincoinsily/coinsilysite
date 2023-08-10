@@ -1,6 +1,6 @@
 import ccxt
 
-def get_xt_data():
+def get_exchange_data():
     xt = ccxt.xt()
     try:
         xt_markets = xt.load_markets()
