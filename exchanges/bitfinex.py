@@ -1,6 +1,6 @@
 import ccxt
 
-def get_bitfinex_data():
+def get_exchange_data():
     bitfinex = ccxt.bitfinex()
     try:
         bitfinex_markets = bitfinex.load_markets()
