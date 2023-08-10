@@ -1,6 +1,6 @@
 import ccxt
 
-def get_crypto_com_data():
+def get_exchange_com_data():
     crypto_com = ccxt.crypto_com()
     try:
         crypto_com_markets = crypto_com.load_markets()
