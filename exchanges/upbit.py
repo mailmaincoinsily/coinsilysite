@@ -1,6 +1,6 @@
 import ccxt
 
-def get_upbit_data():
+def get_exchange_data():
     upbit = ccxt.upbit()
     try:
         upbit_markets = upbit.load_markets()
