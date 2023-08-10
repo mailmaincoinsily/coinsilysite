@@ -1,6 +1,6 @@
 import ccxt
 
-def get_bitmart_data():
+def get_exchange_data():
     bitmart = ccxt.bitmart()
     try:
         bitmart_markets = bitmart.load_markets()
