@@ -1,6 +1,6 @@
 import ccxt
 
-def get_pionex_data():
+def get_exchange_data():
     pionex = ccxt.pionex()
     try:
         pionex_markets = pionex.load_markets()
