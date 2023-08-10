@@ -1,6 +1,6 @@
 import ccxt
 
-def get_lbank_data():
+def get_exchange_data():
     lbank = ccxt.lbank()
     try:
         lbank_markets = lbank.load_markets()
