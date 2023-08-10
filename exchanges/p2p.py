@@ -1,6 +1,6 @@
 import ccxt
 
-def get_p2p_data():
+def get_exchange_data():
     p2p = ccxt.p2p()
     try:
         p2p_markets = p2p.load_markets()
