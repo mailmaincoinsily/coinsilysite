@@ -41,10 +41,10 @@ EXCHANGES = {
     
   
     # Coinbase module
-    'exchanges.coinbase': {
+    'exchanges.coinbase_pro': {
         'name': 'Coinbase',
         'trade_base_url': 'https://www.coinbase.com/trade/',
-        'module': 'exchanges.coinbase',
+        'module': 'exchanges.coinbase_pro',
     },
     # Kraken module
     'exchanges.kraken': {
