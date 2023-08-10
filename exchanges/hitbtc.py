@@ -1,6 +1,6 @@
 import ccxt
 
-def get_hitbtc_data():
+def get_exchange_data():
     hitbtc = ccxt.hitbtc()
     try:
         hitbtc_markets = hitbtc.load_markets()
