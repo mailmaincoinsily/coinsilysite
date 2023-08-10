@@ -38,15 +38,11 @@ EXCHANGES = {
         'trade_base_url': 'https://www.bybit.com/trade/',
         'module': 'exchanges.bybit'
     },
-    
-  
-    # Coinbase module
     'exchanges.coinbase_pro': {
         'name': 'Coinbase',
         'trade_base_url': 'https://www.coinbase.com/trade/',
         'module': 'exchanges.coinbase_pro',
     },
-    # Kraken module
     'exchanges.kraken': {
         'name': 'Kraken',
         'trade_base_url': 'https://www.kraken.com/',
@@ -118,7 +114,6 @@ EXCHANGES = {
         'trade_base_url': 'https://coincheck.com/exchange/spot/trade',
         'module': 'exchanges.coincheck',
     },
-    # Bitget module
     'exchanges.bitget': {
         'name': 'Bitget',
         'trade_base_url': 'https://www.bitget.com/en/contract',
