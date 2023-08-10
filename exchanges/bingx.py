@@ -1,7 +1,6 @@
 import ccxt
-
+bingx = ccxt.bingx()
 def get_exchange_data():
-    bingx = ccxt.bingx()
     try:
         bingx_markets = bingx.load_markets()
         bingx_spot_markets = {symbol: market for symbol, market in bingx_markets.items() if market['spot'] and market['active']}
