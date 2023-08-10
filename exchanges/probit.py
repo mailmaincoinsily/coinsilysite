@@ -1,6 +1,6 @@
 import ccxt
 
-def get_probit_global_data():
+def get_exchange_data():
     probit_global = ccxt.probit_global()
     try:
         probit_global_markets = probit_global.load_markets()
