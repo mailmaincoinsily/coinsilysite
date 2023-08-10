@@ -1,7 +1,6 @@
 import ccxt
-
-def get_bitflyer_data():
-    bitflyer = ccxt.bitflyer()
+bitflyer = ccxt.bitflyer()
+def get_exchange_data():
     try:
         bitflyer_markets = bitflyer.load_markets()
         bitflyer_spot_markets = {symbol: market for symbol, market in bitflyer_markets.items() if market['spot'] and market['active']}
