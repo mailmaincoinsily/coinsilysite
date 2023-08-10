@@ -1,6 +1,6 @@
 import ccxt
 
-def get_whitebit_data():
+def get_exchange_data():
     whitebit = ccxt.whitebit()
     try:
         whitebit_markets = whitebit.load_markets()
