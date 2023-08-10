@@ -1,6 +1,6 @@
 import ccxt
 
-def get_coinbase_data():
+def get_exchange_data():
     coinbase = ccxt.coinbase()
     try:
         coinbase_markets = coinbase.load_markets()
