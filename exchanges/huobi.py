@@ -1,6 +1,6 @@
 import ccxt
 
-def get_huobi_data():
+def get_exchange_data():
     huobi = ccxt.huobipro()
     try:
         huobi_markets = huobi.load_markets()
