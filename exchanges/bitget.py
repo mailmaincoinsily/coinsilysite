@@ -1,6 +1,6 @@
 import ccxt
 bitget = ccxt.bitget()
-def get_bitget_data():
+def get_exchange_data():
     try:
         bitget_markets = bitget.load_markets()
         bitget_spot_markets = {symbol: market for symbol, market in bitget_markets.items() if market['spot'] and market['active']}
