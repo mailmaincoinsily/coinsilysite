@@ -1,6 +1,6 @@
 import ccxt
 
-def get_indoex_data():
+def get_exchange_data():
     indoex = ccxt.indoex()
     try:
         indoex_markets = indoex.load_markets()
