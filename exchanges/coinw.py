@@ -1,6 +1,6 @@
 import ccxt
 
-def get_coinw_data():
+def get_exchange_data():
     coinw = ccxt.coinw()
     try:
         coinw_markets = coinw.load_markets()
