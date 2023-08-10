@@ -1,6 +1,6 @@
 import ccxt
 
-def get_btcturk_data():
+def get_exchange_data():
     btcturk = ccxt.btcturk()
     try:
         btcturk_markets = btcturk.load_markets()
