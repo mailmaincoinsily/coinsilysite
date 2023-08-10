@@ -45,7 +45,7 @@ EXCHANGES = {
     },
     'exchanges.kraken': {
         'name': 'Kraken',
-        'trade_base_url': 'https://pro.kraken.com/app/trade/',
+        'trade_base_url': 'https://www.kraken.com/',
         'module': 'exchanges.kraken',
     },
     # Kukoin module
