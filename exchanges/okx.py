@@ -1,6 +1,6 @@
 import ccxt
 
-def get_okx_data():
+def get_exchange_data():
     okx = ccxt.okex()
     try:
         okx_markets = okx.load_markets()
