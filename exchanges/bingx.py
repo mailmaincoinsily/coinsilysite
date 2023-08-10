@@ -1,6 +1,6 @@
 import ccxt
 
-def get_bingx_data():
+def get_exchange_data():
     bingx = ccxt.bingx()
     try:
         bingx_markets = bingx.load_markets()
