@@ -5,6 +5,7 @@ binance = ccxt.binance()
 
 # Function to calculate triangular arbitrage opportunities
 def calculate_triangular_arbitrage():
+    print("Function is being executed")
     try:
         binance_markets = binance.load_markets()
         binance_spot_markets = {symbol: market for symbol, market in binance_markets.items() if market['spot'] and market['active']}
