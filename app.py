@@ -38,6 +38,7 @@ def calculate():
 @app.route('/triangular')
 def triangular():
     triangular_data = calculate_triangular_arbitrage()
+    print(triangular_data)
     return render_template('triangular.html', triangular_data=triangular_data)
 
 if __name__ == '__main__':
