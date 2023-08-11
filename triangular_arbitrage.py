@@ -11,29 +11,35 @@ def calculate_triangular_arbitrage():
 
         triangular_data = []
 
-        for symbol in binance_spot_markets:
-            print("Processing symbol:", symbol)  # Debug line
-            parts = symbol.split('/')
-            
-            # Check if the symbol has three parts
-            if len(parts) != 3:
-                print("Skipping invalid symbol:", symbol)  # Debug line
-                continue
+        for base_symbol in binance_spot_markets:
+            for quote_symbol in binance_spot_markets:
+                if base_symbol != quote_symbol:
+                    intermediate_symbol = None
 
-            base, _, quote = parts
-            reverse_symbol = f"{quote}/{base}"
-            
-            if reverse_symbol in binance_spot_markets:
-                base_market = binance_spot_markets[symbol]
-                quote_market = binance_spot_markets[reverse_symbol]
-                
-                if quote_market['quote'] == quote:
-                    arbitrage = (1 / base_market['bid']) * quote_market['ask'] * base_market['ask'] - 1
-                    triangular_data.append({'symbol': symbol, 'profit': round(arbitrage * 100, 2)})
+                    # Find the intermediate symbol
+                    for symbol in binance_spot_markets:
+                        if symbol != base_symbol and symbol != quote_symbol:
+                            intermediate_symbol = symbol
+                            break
+
+                    if intermediate_symbol:
+                        base_to_intermediate = binance.fetch_ticker(base_symbol)['ask']
+                        intermediate_to_quote = binance.fetch_ticker(intermediate_symbol)['ask']
+                        quote_to_base = binance.fetch_ticker(quote_symbol)['bid']
+
+                        arbitrage_ratio = (1 / base_to_intermediate) * intermediate_to_quote * quote_to_base - 1
+
+                        if arbitrage_ratio > 0.001:  # Considering fees
+                            triangular_data.append({
+                                'base_symbol': base_symbol,
+                                'intermediate_symbol': intermediate_symbol,
+                                'quote_symbol': quote_symbol,
+                                'arbitrage_ratio': round(arbitrage_ratio * 100, 2)
+                            })
 
         return triangular_data
     except Exception as e:
-        print("Exception:", e)  # Debug line
+        print("Exception:", e)
         return []
 
 # Call the function to calculate triangular arbitrage opportunities
@@ -41,4 +47,9 @@ triangular_arbitrage_data = calculate_triangular_arbitrage()
 
 # Print the calculated triangular arbitrage opportunities
 for data in triangular_arbitrage_data:
-    print("Symbol:", data['symbol'], "Profit:", data['profit'], "%")
+    print("Opportunity:")
+    print("Base Symbol:", data['base_symbol'])
+    print("Intermediate Symbol:", data['intermediate_symbol'])
+    print("Quote Symbol:", data['quote_symbol'])
+    print("Arbitrage Ratio:", data['arbitrage_ratio'], "%")
+    print()
