@@ -5,27 +5,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    Debug: {{ triangular_data }}
-
     <h1>Triangular Arbitrage Opportunities</h1>
 
     <!-- Display Triangular Arbitrage Results -->
     <table>
         <thead>
             <tr>
-                <th>Symbol</th>
-                <th>Profit (%)</th>
+                <th>Base Symbol</th>
+                <th>Intermediate Symbol</th>
+                <th>Quote Symbol</th>
+                <th>Arbitrage Ratio (%)</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in triangular_data %}
+            {% for data in triangular_data %}
                 <tr>
-                    <td>{{ item.symbol }}</td>
-                    <td>{{ item.profit }}</td>
+                    <td>{{ data.base_symbol }}</td>
+                    <td>{{ data.intermediate_symbol }}</td>
+                    <td>{{ data.quote_symbol }}</td>
+                    <td>{{ data.arbitrage_ratio }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
 </body>
 </html>
