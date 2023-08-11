@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Triangular Arbitrage Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Triangular Arbitrage Results</h1>
+
+    <!-- Display Triangular Arbitrage Results -->
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Profit (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in triangular_data %}
+                <tr>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.profit }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
