@@ -1,13 +1,13 @@
 from flask import Flask
-import ccxt
-import asyncio
+from binance.client import Client
+from binance.websockets import BinanceSocketManager
+import os
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    loop = asyncio.get_event_loop()
-    opportunities = loop.run_until_complete(find_triangular_arbitrage_opportunities())
+    opportunities = find_triangular_arbitrage_opportunities()
     
     if opportunities:
         result = "<h1>Triangular Arbitrage Opportunities:</h1>"
@@ -17,39 +17,47 @@ def index():
     else:
         return "No arbitrage opportunities found."
 
-async def find_triangular_arbitrage_opportunities():
-    binance = ccxt.binance()
+def find_triangular_arbitrage_opportunities():
+    client = Client(api_key=os.environ.get("BINANCE_API_KEY"), api_secret=os.environ.get("BINANCE_API_SECRET"))
+    bm = BinanceSocketManager(client)
     
-    markets = await binance.load_markets()
-    usdt_markets = [market for market in markets if market.endswith('/USDT')]
+    markets = client.get_exchange_info()['symbols']
+    usdt_markets = [market['symbol'] for market in markets if market['symbol'].endswith('USDT')]
     
     profitable_trades = []
     
-    for market in usdt_markets:
-        base_currency, _ = market.split('/')
+    def process_message(msg):
+        base_currency, _ = msg['symbol'].split('@')
         
-        for intermediate_currency in markets:
-            if intermediate_currency.endswith('/USDT') or intermediate_currency == market:
+        for intermediate_currency in usdt_markets:
+            if intermediate_currency.endswith('USDT') or intermediate_currency == msg['symbol']:
                 continue
             
             try:
-                order_book = await binance.fetch_order_book(market)
-                bid_price = order_book['bids'][0][0]
-                
-                intermediate_order_book = await binance.fetch_order_book(intermediate_currency)
-                ask_price = intermediate_order_book['asks'][0][0]
+                bid_price = float(msg['bidPrice'])
+                ask_price = float(client.get_avg_price(symbol=intermediate_currency)['price'])
                 
                 arbitrage_percentage = ((ask_price / bid_price) - 1) * 100
                 
                 if arbitrage_percentage > 0:
                     profitable_trades.append({
-                        'pair1': market,
+                        'pair1': msg['symbol'],
                         'pair2': intermediate_currency,
                         'arbitrage_percentage': arbitrage_percentage
                     })
             except (ccxt.BaseError, IndexError):
                 pass
-            
+    
+    # Subscribe to live bid price updates for all trading pairs
+    conn_key = bm.start_trade_socket(callback=process_message)
+    bm.start()
+    
+    import time
+    time.sleep(10)  # Let it run for 10 seconds to collect data
+    
+    bm.stop_socket(conn_key)
+    bm.close()
+    
     profitable_trades.sort(key=lambda trade: trade['arbitrage_percentage'], reverse=True)
     
     return profitable_trades
