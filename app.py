@@ -5,12 +5,27 @@ async def find_arbitrage_opportunities():
     binance = ccxt.binance()
     markets = await binance.fetch_markets()
     
-    usdt_pairs = [market['symbol'] for market in markets if 'USDT' in market['symbol']]
+    usdt_assets = set()
     
-    for pair1 in usdt_pairs:
-        for pair2 in usdt_pairs:
-            for pair3 in usdt_pairs:
-                if pair1 != pair2 and pair2 != pair3 and pair1 != pair3:
+    # Collect assets trading with USDT
+    for market in markets:
+        if 'USDT' in market['symbol']:
+            base, quote = market['symbol'].split('/')
+            if base != 'USDT':
+                usdt_assets.add(base)
+            if quote != 'USDT':
+                usdt_assets.add(quote)
+    
+    usdt_assets = list(usdt_assets)
+    
+    for base in usdt_assets:
+        for quote in usdt_assets:
+            if base != quote:
+                pair1 = f"{base}/USDT"
+                pair2 = f"USDT/{quote}"
+                pair3 = f"{quote}/{base}"
+                
+                try:
                     orderbook1 = await binance.fetch_order_book(pair1)
                     orderbook2 = await binance.fetch_order_book(pair2)
                     orderbook3 = await binance.fetch_order_book(pair3)
@@ -28,5 +43,7 @@ async def find_arbitrage_opportunities():
                             print(f"Arbitrage Opportunity Found: {pair1} -> {pair2} -> {pair3}")
                             print(f"Profit Rate: {rate:.8f}")
                             print("======================")
+                except:
+                    pass
 
 asyncio.run(find_arbitrage_opportunities())
