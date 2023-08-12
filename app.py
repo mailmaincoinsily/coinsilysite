@@ -1,4 +1,5 @@
 import ccxt
+import asyncio
 
 async def find_triangular_arbitrage_opportunities():
     binance = ccxt.binance()
@@ -45,5 +46,4 @@ async def main():
             print(f"Opportunity: {opportunity['pair1']} -> {opportunity['pair2']} ({opportunity['arbitrage_percentage']:.2f}%)")
 
 if __name__ == "__main__":
-    import asyncio
     asyncio.run(main())
