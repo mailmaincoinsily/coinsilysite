@@ -1,5 +1,21 @@
+from flask import Flask
 import ccxt
 import asyncio
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    loop = asyncio.get_event_loop()
+    opportunities = loop.run_until_complete(find_triangular_arbitrage_opportunities())
+    
+    if opportunities:
+        result = "<h1>Triangular Arbitrage Opportunities:</h1>"
+        for opportunity in opportunities:
+            result += f"<p>Opportunity: {opportunity['pair1']} -> {opportunity['pair2']} ({opportunity['arbitrage_percentage']:.2f}%)</p>"
+        return result
+    else:
+        return "No arbitrage opportunities found."
 
 async def find_triangular_arbitrage_opportunities():
     binance = ccxt.binance()
@@ -38,12 +54,5 @@ async def find_triangular_arbitrage_opportunities():
     
     return profitable_trades
 
-async def main():
-    opportunities = await find_triangular_arbitrage_opportunities()
-    
-    if opportunities:
-        for opportunity in opportunities:
-            print(f"Opportunity: {opportunity['pair1']} -> {opportunity['pair2']} ({opportunity['arbitrage_percentage']:.2f}%)")
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    app.run(debug=True)
