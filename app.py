@@ -25,19 +25,21 @@ for pair in all_pairs:
 
     if base_currency in currencies_to_consider and quote_currency in currencies_to_consider:
         ticker = binance.fetch_ticker(pair)
-        
+
         if ticker['ask'] and ticker['bid']:
             rate_to_base = ticker['ask']
             rate_to_quote = 1 / ticker['bid']
-            
+
             profit = (rate_to_quote / rate_to_base) - 1
-            if profit > 0:
-                arbitrage_opportunities.append({
-                    'pair': pair,
-                    'profit': profit,
-                    'rate_to_base': rate_to_base,
-                    'rate_to_quote': rate_to_quote
-                })
+            arbitrage_opportunities.append({
+                'pair': pair,
+                'profit': profit,
+                'rate_to_base': rate_to_base,
+                'rate_to_quote': rate_to_quote
+            })
+
+# Sort arbitrage opportunities by profit
+arbitrage_opportunities.sort(key=lambda x: x['profit'], reverse=True)
 
 @app.route('/')
 def index():
