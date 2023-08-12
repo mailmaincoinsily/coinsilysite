@@ -1,63 +1,58 @@
-import ccxt
 import asyncio
-from flask import Flask, render_template
+from binance.client import Client
 
-app = Flask(__name__)
+async def get_usdt_pairs():
+    client = Client()
+    markets = await client.get_exchange_info()
+    usdt_pairs = []
 
-# Initialize Binance API
-binance = ccxt.binance({
-    'rateLimit': 20,
-    'enableRateLimit': True,
-})
+    for symbol in markets['symbols']:
+        if 'USDT' in symbol['symbol']:
+            usdt_pairs.append(symbol['symbol'])
+    
+    return usdt_pairs
 
-# Fetch all trading pairs
-all_pairs = binance.load_markets()
+async def calculate_arbitrage(pair1, pair2, pair3):
+    client = Client()
+    
+    ticker1 = await client.get_ticker(symbol=pair1)
+    ticker2 = await client.get_ticker(symbol=pair2)
+    ticker3 = await client.get_ticker(symbol=pair3)
+    
+    # Perform triangular arbitrage calculations here
+    
+    return {
+        'pair1': pair1,
+        'pair2': pair2,
+        'pair3': pair3,
+        'profit_percentage': calculated_profit
+    }
 
-# List to store arbitrage opportunities
-arbitrage_opportunities = []
+async def main():
+    usdt_pairs = await get_usdt_pairs()
+    arbitrage_opportunities = []
 
-async def process_pair(pair1, pair2, pair3):
-    ticker1 = await binance.fetch_ticker(pair1)
-    ticker2 = await binance.fetch_ticker(pair2)
-    ticker3 = await binance.fetch_ticker(pair3)
+    for i in range(len(usdt_pairs)):
+        for j in range(i + 1, len(usdt_pairs)):
+            for k in range(j + 1, len(usdt_pairs)):
+                pair1 = usdt_pairs[i]
+                pair2 = usdt_pairs[j]
+                pair3 = usdt_pairs[k]
+                
+                arbitrage_data = await calculate_arbitrage(pair1, pair2, pair3)
+                
+                if arbitrage_data['profit_percentage'] > 0:
+                    arbitrage_opportunities.append(arbitrage_data)
 
-    if (
-        ticker1['ask'] and ticker1['bid'] and
-        ticker2['ask'] and ticker2['bid'] and
-        ticker3['ask'] and ticker3['bid']
-    ):
-        rate1_to_2 = ticker1['ask']
-        rate2_to_3 = 1 / ticker2['bid']
-        rate3_to_1 = 1 / ticker3['bid']
+    # Display arbitrage opportunities
+    for opportunity in arbitrage_opportunities:
+        print("Triangular Arbitrage Opportunity:")
+        print("Buy", opportunity['pair1'].replace("USDT", ""), "with USDT,", 
+              "Sell", opportunity['pair2'].replace("USDT", ""), "with", opportunity['pair1'].replace("USDT", ""), ",",
+              "Sell", opportunity['pair3'].replace("USDT", ""), "with", opportunity['pair2'].replace("USDT", ""), ",",
+              "Profit Percentage:", opportunity['profit_percentage'], "%")
+        print()
 
-        potential_profit_percentage = (
-            rate1_to_2 * rate2_to_3 * rate3_to_1
-        ) * 100 - 100
-
-        if potential_profit_percentage > 0:
-            arbitrage_opportunities.append({
-                'pair1': pair1,
-                'pair2': pair2,
-                'pair3': pair3,
-                'potential_profit_percentage': potential_profit_percentage
-            })
-
-# Loop through pairs involving USDT
-usdt_pairs = [pair for pair in all_pairs if 'USDT' in pair]
+# Run the event loop
 loop = asyncio.get_event_loop()
-
-for pair1 in usdt_pairs:
-    for pair2 in usdt_pairs:
-        for pair3 in usdt_pairs:
-            if pair1 != pair2 and pair2 != pair3 and pair3 != pair1:
-                loop.run_until_complete(process_pair(pair1, pair2, pair3))
-
-# Sort arbitrage opportunities by potential profit percentage
-arbitrage_opportunities.sort(key=lambda x: x['potential_profit_percentage'], reverse=True)
-
-@app.route('/')
-def index():
-    return render_template('index.html', arbitrage_opportunities=arbitrage_opportunities)
-
-if __name__ == '__main__':
-    app.run()
+loop.run_until_complete(main())
