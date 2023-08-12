@@ -3,3 +3,4 @@ ccxt
 gunicorn
 requests
 pycoingecko
+python-binance
