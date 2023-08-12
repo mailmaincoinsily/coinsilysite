@@ -7,17 +7,14 @@
     <h1>Triangular Arbitrage Opportunities</h1>
     <table>
         <tr>
-            <th>Pair</th>
-            <th>Profit</th>
-            <th>Rate to Base</th>
-            <th>Rate to Quote</th>
+            <th>Trade Flow</th>
+            <th>Profit Percentage (%)</th>
         </tr>
         {% for opportunity in arbitrage_opportunities %}
         <tr>
-            <td>{{ opportunity.pair }}</td>
-            <td>{{ opportunity.profit }}</td>
-            <td>{{ opportunity.rate_to_base }}</td>
-            <td>{{ opportunity.rate_to_quote }}</td>
+            <td>Buy {{ opportunity.pair.split('/')[1] }} with {{ opportunity.pair.split('/')[0] }},
+                Sell {{ opportunity.pair.split('/')[0] }} with {{ opportunity.pair.split('/')[1] }}</td>
+            <td>{{ opportunity.profit_percentage }}</td>
         </tr>
         {% endfor %}
     </table>
