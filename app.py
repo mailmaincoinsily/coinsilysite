@@ -1,58 +1,32 @@
+import ccxt
 import asyncio
-from binance.client import Client
 
-async def get_usdt_pairs():
-    client = Client()
-    markets = await client.get_exchange_info()
-    usdt_pairs = []
-
-    for symbol in markets['symbols']:
-        if 'USDT' in symbol['symbol']:
-            usdt_pairs.append(symbol['symbol'])
+async def find_arbitrage_opportunities():
+    binance = ccxt.binance()
+    markets = await binance.fetch_markets()
     
-    return usdt_pairs
-
-async def calculate_arbitrage(pair1, pair2, pair3):
-    client = Client()
+    usdt_pairs = [market['symbol'] for market in markets if 'USDT' in market['symbol']]
     
-    ticker1 = await client.get_ticker(symbol=pair1)
-    ticker2 = await client.get_ticker(symbol=pair2)
-    ticker3 = await client.get_ticker(symbol=pair3)
-    
-    # Perform triangular arbitrage calculations here
-    
-    return {
-        'pair1': pair1,
-        'pair2': pair2,
-        'pair3': pair3,
-        'profit_percentage': calculated_profit
-    }
+    for pair1 in usdt_pairs:
+        for pair2 in usdt_pairs:
+            for pair3 in usdt_pairs:
+                if pair1 != pair2 and pair2 != pair3 and pair1 != pair3:
+                    orderbook1 = await binance.fetch_order_book(pair1)
+                    orderbook2 = await binance.fetch_order_book(pair2)
+                    orderbook3 = await binance.fetch_order_book(pair3)
+                    
+                    bid1 = orderbook1['bids'][0][0] if len(orderbook1['bids']) > 0 else None
+                    ask1 = orderbook1['asks'][0][0] if len(orderbook1['asks']) > 0 else None
+                    bid2 = orderbook2['bids'][0][0] if len(orderbook2['bids']) > 0 else None
+                    ask2 = orderbook2['asks'][0][0] if len(orderbook2['asks']) > 0 else None
+                    bid3 = orderbook3['bids'][0][0] if len(orderbook3['bids']) > 0 else None
+                    ask3 = orderbook3['asks'][0][0] if len(orderbook3['asks']) > 0 else None
+                    
+                    if bid1 and ask2 and ask3:
+                        rate = (1 / bid1) * ask2 * ask3
+                        if rate > 1:
+                            print(f"Arbitrage Opportunity Found: {pair1} -> {pair2} -> {pair3}")
+                            print(f"Profit Rate: {rate:.8f}")
+                            print("======================")
 
-async def main():
-    usdt_pairs = await get_usdt_pairs()
-    arbitrage_opportunities = []
-
-    for i in range(len(usdt_pairs)):
-        for j in range(i + 1, len(usdt_pairs)):
-            for k in range(j + 1, len(usdt_pairs)):
-                pair1 = usdt_pairs[i]
-                pair2 = usdt_pairs[j]
-                pair3 = usdt_pairs[k]
-                
-                arbitrage_data = await calculate_arbitrage(pair1, pair2, pair3)
-                
-                if arbitrage_data['profit_percentage'] > 0:
-                    arbitrage_opportunities.append(arbitrage_data)
-
-    # Display arbitrage opportunities
-    for opportunity in arbitrage_opportunities:
-        print("Triangular Arbitrage Opportunity:")
-        print("Buy", opportunity['pair1'].replace("USDT", ""), "with USDT,", 
-              "Sell", opportunity['pair2'].replace("USDT", ""), "with", opportunity['pair1'].replace("USDT", ""), ",",
-              "Sell", opportunity['pair3'].replace("USDT", ""), "with", opportunity['pair2'].replace("USDT", ""), ",",
-              "Profit Percentage:", opportunity['profit_percentage'], "%")
-        print()
-
-# Run the event loop
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+asyncio.run(find_arbitrage_opportunities())
