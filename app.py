@@ -1,9 +1,8 @@
 import ccxt
-import asyncio
 
-async def find_arbitrage_opportunities():
+def find_arbitrage_opportunities():
     binance = ccxt.binance()
-    markets = await binance.fetch_markets()
+    markets = binance.fetch_markets()
     
     usdt_assets = set()
     
@@ -26,9 +25,9 @@ async def find_arbitrage_opportunities():
                 pair3 = f"{quote}/{base}"
                 
                 try:
-                    orderbook1 = await binance.fetch_order_book(pair1)
-                    orderbook2 = await binance.fetch_order_book(pair2)
-                    orderbook3 = await binance.fetch_order_book(pair3)
+                    orderbook1 = binance.fetch_order_book(pair1)
+                    orderbook2 = binance.fetch_order_book(pair2)
+                    orderbook3 = binance.fetch_order_book(pair3)
                     
                     bid1 = orderbook1['bids'][0][0] if len(orderbook1['bids']) > 0 else None
                     ask1 = orderbook1['asks'][0][0] if len(orderbook1['asks']) > 0 else None
@@ -46,4 +45,4 @@ async def find_arbitrage_opportunities():
                 except:
                     pass
 
-asyncio.run(find_arbitrage_opportunities())
+find_arbitrage_opportunities()
