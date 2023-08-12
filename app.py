@@ -18,25 +18,40 @@ currencies_to_consider = ['BTC', 'BNB', 'USDT']
 # List to store arbitrage opportunities
 arbitrage_opportunities = []
 
-# Loop through all pairs
-for pair in all_pairs:
-    base_currency = pair.split('/')[0]
-    quote_currency = pair.split('/')[1]
+# Loop through all pairs involving BTC
+for btc_pair in all_pairs:
+    if 'BTC' in btc_pair:
+        for bnb_pair in all_pairs:
+            if 'BNB' in bnb_pair:
+                for usdt_pair in all_pairs:
+                    if 'USDT' in usdt_pair:
+                        ticker_btc = binance.fetch_ticker(btc_pair)
+                        ticker_bnb = binance.fetch_ticker(bnb_pair)
+                        ticker_usdt = binance.fetch_ticker(usdt_pair)
 
-    if base_currency in currencies_to_consider and quote_currency in currencies_to_consider:
-        ticker = binance.fetch_ticker(pair)
+                        if (
+                            ticker_btc['ask'] and ticker_btc['bid'] and
+                            ticker_bnb['ask'] and ticker_bnb['bid'] and
+                            ticker_usdt['ask'] and ticker_usdt['bid']
+                        ):
+                            rate_btc_to_bnb = ticker_btc['ask']
+                            rate_bnb_to_usdt = ticker_bnb['bid']
+                            rate_usdt_to_btc = 1 / ticker_usdt['ask']
 
-        if ticker['ask'] and ticker['bid']:
-            rate_to_base = ticker['ask']
-            rate_to_quote = 1 / ticker['bid']
+                            profit = (
+                                rate_btc_to_bnb * rate_bnb_to_usdt * rate_usdt_to_btc
+                            ) - 1
 
-            profit = (rate_to_quote / rate_to_base) - 1
-            arbitrage_opportunities.append({
-                'pair': pair,
-                'profit': profit,
-                'rate_to_base': rate_to_base,
-                'rate_to_quote': rate_to_quote
-            })
+                            if profit > 0:
+                                arbitrage_opportunities.append({
+                                    'pair_btc': btc_pair,
+                                    'pair_bnb': bnb_pair,
+                                    'pair_usdt': usdt_pair,
+                                    'profit': profit,
+                                    'rate_btc_to_bnb': rate_btc_to_bnb,
+                                    'rate_bnb_to_usdt': rate_bnb_to_usdt,
+                                    'rate_usdt_to_btc': rate_usdt_to_btc
+                                })
 
 # Sort arbitrage opportunities by profit
 arbitrage_opportunities.sort(key=lambda x: x['profit'], reverse=True)
