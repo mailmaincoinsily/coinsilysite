@@ -1,18 +1,26 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
-from flask_login import LoginManager, login_required, current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from auth import auth_bp
+from password import password_bp
 from init import login_manager
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Change this to a secret key
-
-app.register_blueprint(auth_bp)
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+db = SQLAlchemy(app)
 login_manager.init_app(app)
 
-# ... Your existing code ...
+# User model
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+
+# Routes
 
 @app.route('/')
 @login_required
@@ -46,4 +54,5 @@ def calculate():
     )
 
 if __name__ == '__main__':
+    db.create_all()
     app.run()
