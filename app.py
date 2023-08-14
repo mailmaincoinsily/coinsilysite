@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    if not session.get('logged_in'):
+        return redirect(url_for('auth.login'))  # Redirect to login if not logged in
     return render_template('index.html', positive_count=0, negative_count=0, exchanges=EXCHANGES)
 
 @app.route('/calculate', methods=['POST'])
