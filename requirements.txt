@@ -4,3 +4,7 @@ gunicorn
 requests
 
 
+Flask-Login
+Flask-SQLAlchemy
+Werkzeug
+
