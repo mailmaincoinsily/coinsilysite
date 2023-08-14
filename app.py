@@ -1,3 +1,5 @@
+from flask import session, redirect, url_for
+from auth import auth_bp  # Import the auth_bp blueprint
 from flask import Flask, render_template, request
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
