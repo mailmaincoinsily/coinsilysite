@@ -7,30 +7,30 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set the secret key before using the session object
 
 @app.route('/admin', methods=['GET', 'POST'])
-    def admin():
-        if not session.get('logged_in'):
-            return redirect(url_for('login'))
+def admin():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
 
-        if not is_admin(session['username']):
-            return render_template('admin.html', admin=False)
+    if not is_admin(session['username']):
+        return render_template('admin.html', admin=False)
 
-        return render_template('admin.html', admin=True, users=users)
+    return render_template('admin.html', admin=True, users=users)
         
     
 @app.route('/admin/edit', methods=['POST'])
-    def edit_user_data():
-        if not session.get('logged_in'):
-            return redirect(url_for('login'))
+def edit_user_data():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
 
-        if not is_admin(session['username']):
-            return redirect(url_for('admin'))
-
-        username = request.form['username']
-        new_password = request.form['new_password']
-
-        users[username] = new_password  # Update the password for the selected user
-
+    if not is_admin(session['username']):
         return redirect(url_for('admin'))
+
+    username = request.form['username']
+    new_password = request.form['new_password']
+
+    users[username] = new_password  # Update the password for the selected user
+
+    return redirect(url_for('admin'))
 @app.route('/')
 def index():
     if session.get('logged_in'):
