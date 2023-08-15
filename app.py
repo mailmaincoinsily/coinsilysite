@@ -2,6 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
 from auth import authenticate_user, is_admin
+# Define the users dictionary with sample user data
+users = {
+    'admin': 'admin',
+    'user1': 'user1_password',
+    # Add more users if needed
+}
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set the secret key before using the session object
