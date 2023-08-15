@@ -84,5 +84,4 @@ def calculate():
     )
 
 if __name__ == '__main__':
-    setup_admin_routes(app, users)  # Call the function to set up admin routes
     app.run()
