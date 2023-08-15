@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    
+    {% if not admin %}
+        <p>You do not have permission to access this page.</p>
+    {% else %}
+        <h2>Edit User Data</h2>
+        <form method="post" action="/admin/edit">
+            <label for="username">Username:</label>
+            <select id="username" name="username">
+                {% for username in users %}
+                    <option value="{{ username }}">{{ username }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="new_password">New Password:</label>
+            <input type="password" id="new_password" name="new_password" required>
+            <br>
+            <input type="submit" value="Edit User Data">
+        </form>
+    {% endif %}
+</body>
+</html>
