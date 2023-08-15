@@ -1,4 +1,4 @@
-# auth.py
+import json
 # Load user data from the JSON file
 with open('user_data.json', 'r') as f:
     users = json.load(f)
