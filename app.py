@@ -4,7 +4,6 @@ from config import EXCHANGES  # Import the EXCHANGES dictionary
 from auth import authenticate_user, is_admin
 from admin_routes import setup_admin_routes
 
-app
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set the secret key before using the session object
 
