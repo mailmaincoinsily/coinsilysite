@@ -11,6 +11,17 @@ app.secret_key = 'your_secret_key'  # Set the secret key before using the sessio
 with open('user_data.json', 'r') as f:
     users = json.load(f)
     
+# Function to update user password and save back to the JSON file
+def update_user_password(username, new_password):
+    if not os.access('user_data.json', os.W_OK):
+        return False  # No write permission
+
+    users[username] = new_password
+    with open('user_data.json', 'w') as f:
+        json.dump(users, f, indent=4)
+    
+    return True
+
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if not session.get('logged_in') or not session.get('username'):
@@ -32,13 +43,11 @@ def edit_user_data():
 
     username = request.form['username']
     new_password = request.form['new_password']
-
-    users[username] = new_password  # Update the password for the selected user
-    # Save the updated user data back to the JSON file
-    with open('user_data.json', 'w') as f:
-        json.dump(users, f, indent=4)
-
-    return redirect(url_for('admin'))
+    if update_user_password(username, new_password):
+        return redirect(url_for('admin'))
+    else:
+        return "Failed to update password due to write permission issue."
+   
     
 @app.route('/')
 def index():
