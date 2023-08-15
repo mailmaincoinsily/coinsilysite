@@ -12,6 +12,6 @@ def authenticate_user(username, password):
         return True
     return False
 # ... (your existing code)
-
 def is_admin(username):
-    return username == 'admin'  # Adjust this logic based on your admin user criteria
+    return users.get(username) == 'admin'
+
