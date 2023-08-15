@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
+from auth import authenticate_user  # Import the authenticate_user function
 
 app = Flask(__name__)
 
