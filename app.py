@@ -16,6 +16,20 @@ def main():
         return redirect(url_for('login'))
 
     return render_template('index.html', positive_count=0, negative_count=0, exchanges=EXCHANGES)
+ 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if authenticate_user(username, password):
+            session['logged_in'] = True
+            return redirect(url_for('main'))
+        else:
+            return render_template('login.html', error_message='Invalid username or password')
+    
+    return render_template('login.html', error_message=None)
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
