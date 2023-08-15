@@ -54,6 +54,27 @@
             color: red;
             margin-top: 10px;
         }
+        /* ... your existing CSS styles ... */
+
+        /* Additional styles for the "Auto Trade" button and message */
+        .auto-trade-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .auto-trade-button:hover {
+            background-color: #45a049;
+        }
+        .coming-soon-message {
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
@@ -75,6 +96,26 @@
         {% if error_message %}
         <p class="error-message">{{ error_message }}</p>
         {% endif %}
+        <!-- ... your existing login form ... -->
+
+        <!-- Add the "Auto Trade" button and "Coming Soon" message -->
+        <div class="auto-trade-button-container">
+            <button class="auto-trade-button" id="autoTradeButton">Auto Trade</button>
+            <p class="coming-soon-message" id="comingSoonMessage">Coming Soon</p>
+        </div>
     </div>
+
+    <!-- Add JavaScript to show the "Coming Soon" message when the button is clicked -->
+    <script>
+        const autoTradeButton = document.getElementById('autoTradeButton');
+        const comingSoonMessage = document.getElementById('comingSoonMessage');
+
+        autoTradeButton.addEventListener('click', () => {
+            comingSoonMessage.style.display = 'block';
+            setTimeout(() => {
+                comingSoonMessage.style.display = 'none';
+            }, 2000); // Hide the message after 2 seconds
+        });
+    </script>
 </body>
 </html>
