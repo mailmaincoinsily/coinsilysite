@@ -52,6 +52,7 @@ def login():
         
         if authenticate_user(username, password):
             session['logged_in'] = True
+            session['username'] = username
             return redirect(url_for('main'))
         else:
             return render_template('login.html', error_message='Invalid username or password')
