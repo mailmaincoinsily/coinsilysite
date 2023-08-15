@@ -8,7 +8,7 @@ app.secret_key = 'your_secret_key'  # Set the secret key before using the sessio
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    if not session.get('logged_in'):
+    if not session.get('logged_in') or not session.get('username'):
         return redirect(url_for('login'))
 
     if not is_admin(session['username']):
