@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
-from auth import authenticate_user  # Import the authenticate_user function
+from auth import authenticate_user, is_admin
+from admin_routes import setup_admin_routes
 
+app
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set the secret key before using the session object
 
@@ -59,4 +61,5 @@ def calculate():
     )
 
 if __name__ == '__main__':
+    setup_admin_routes(app, users)  # Call the function to set up admin routes
     app.run()
