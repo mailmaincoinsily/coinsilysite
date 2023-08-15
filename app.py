@@ -1,17 +1,16 @@
+import json
 from flask import Flask, render_template, request, redirect, url_for, session
 from engine import calculate_arbitrage, get_exchange_name
 from config import EXCHANGES  # Import the EXCHANGES dictionary
 from auth import authenticate_user, is_admin
-# Define the users dictionary with sample user data
-users = {
-    'admin': 'admin',
-    'user1': 'user1_password',
-    # Add more users if needed
-}
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Set the secret key before using the session object
 
+# Load user data from the JSON file
+with open('user_data.json', 'r') as f:
+    users = json.load(f)
+    
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if not session.get('logged_in') or not session.get('username'):
@@ -35,8 +34,12 @@ def edit_user_data():
     new_password = request.form['new_password']
 
     users[username] = new_password  # Update the password for the selected user
+    # Save the updated user data back to the JSON file
+    with open('user_data.json', 'w') as f:
+        json.dump(users, f, indent=4)
 
     return redirect(url_for('admin'))
+    
 @app.route('/')
 def index():
     if session.get('logged_in'):
