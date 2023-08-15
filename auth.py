@@ -2,7 +2,7 @@
 
 # Dummy user data (replace this with your authentication logic)
 users = {
-    'username1': 'password1',
+    'admin': 'admin',
     'username2': 'password2'
 }
 
