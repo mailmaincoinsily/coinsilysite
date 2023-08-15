@@ -7,6 +7,7 @@ users = {
 }
 
 def authenticate_user(username, password):
+    print(f"Received username: {username}, password: {password}")
     if users.get(username) == password:
         return True
     return False
