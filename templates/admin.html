@@ -6,23 +6,21 @@
 <body>
     <h1>Admin Panel</h1>
     
-    {% if not admin %}
-        <p>You do not have permission to access this page.</p>
-    {% else %}
+    {% if admin %}
         <h2>Edit User Data</h2>
         <form method="post" action="/admin/edit">
             <label for="username">Username:</label>
-            <select id="username" name="username">
-                {% for username in users %}
-                    <option value="{{ username }}">{{ username }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" id="username" name="username" required>
             <br>
             <label for="new_password">New Password:</label>
             <input type="password" id="new_password" name="new_password" required>
             <br>
             <input type="submit" value="Edit User Data">
         </form>
+    {% else %}
+        <p>You do not have admin privileges to access this section.</p>
     {% endif %}
+    
+    <a href="/">Back to Main</a>
 </body>
 </html>
