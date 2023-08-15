@@ -11,3 +11,7 @@ def authenticate_user(username, password):
     if users.get(username) == password:
         return True
     return False
+# ... (your existing code)
+
+def is_admin(username):
+    return username == 'admin'  # Adjust this logic based on your admin user criteria
