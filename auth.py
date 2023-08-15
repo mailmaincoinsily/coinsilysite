@@ -1,10 +1,8 @@
 # auth.py
+# Load user data from the JSON file
+with open('user_data.json', 'r') as f:
+    users = json.load(f)
 
-# Dummy user data (replace this with your authentication logic)
-users = {
-    'admin': 'admin',
-    'username2': 'password2'
-}
 
 def authenticate_user(username, password):
     print(f"Received username: {username}, password: {password}")
