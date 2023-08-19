@@ -33,8 +33,17 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange1_price = float(exchange1_tickers[symbol]['last'])
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
-        exchange1_trade_link = "{}{}{}".format(exchange1_trade_base_url, symbol, exchange1_config['sign'])
-        exchange2_trade_link = "{}{}{}".format(exchange2_trade_base_url, symbol, exchange2_config['sign'])
+        if exchange1 in ('exchanges.mexc', 'exchanges.gateio', 'exchanges.binance'):
+            symbol_link = symbol.replace('/', '_')
+        elif exchange1 == 'exchanges.bybit':
+            symbol_link = symbol.replace('/', '/')
+        elif exchange1 == 'exchanges.kucoin':
+            symbol_link = symbol.replace('/', '-')
+        else:
+            symbol_link = symbol
+
+        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol_link)
+        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol_link)
        
         data.append({
             'symbol': symbol,
