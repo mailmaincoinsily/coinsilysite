@@ -51,7 +51,7 @@ EXCHANGES = {
     },
     # Kukoin module
     'exchanges.kucoin': {
-        'name': 'KuCoin',
+        'name': 'Kucoin',
         'trade_base_url': 'https://www.kucoin.com/trade/',
         'module': 'exchanges.kucoin',
     },
