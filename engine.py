@@ -33,8 +33,11 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
 
-        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", "_"))
-        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", "_"))
+        exchange1_symbol_format = "/" if "/" in symbol else "_"
+        exchange2_symbol_format = "/" if "/" in symbol else "_"
+        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace(exchange1_symbol_format, "_"))
+        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace(exchange2_symbol_format, "_"))
+
 
         data.append({
             'symbol': symbol,
@@ -51,3 +54,6 @@ def calculate_arbitrage(exchange1, exchange2):
     data.sort(key=lambda x: x['arbitrage'], reverse=True)
 
     return data
+
+
+
