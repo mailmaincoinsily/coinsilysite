@@ -50,10 +50,10 @@ EXCHANGES = {
         'module': 'exchanges.kraken',
     },
     # Kukoin module
-    'exchanges.kukoin': {
+    'exchanges.kucoin': {
         'name': 'KuCoin',
         'trade_base_url': 'https://www.kucoin.com/trade/',
-        'module': 'exchanges.kukoin',
+        'module': 'exchanges.kucoin',
     },
     # Okex module
     'exchanges.okex': {
