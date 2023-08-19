@@ -22,13 +22,11 @@ EXCHANGES = {
         'name': 'Gate.io',
         'trade_base_url': 'https://www.gate.io/trade/',
         'module': 'exchanges.gateio',  # Name of the module (gateio.py) without the .py extension
-        'sign': '_' 
     },
     'exchanges.mexc': {
         'name': 'MEXC',
         'trade_base_url': 'https://www.mexc.com/exchange/',
         'module': 'exchanges.mexc',
-        'sign': '_' 
     },
     'exchanges.binance': {
         'name': 'Binance',
@@ -39,34 +37,30 @@ EXCHANGES = {
     'exchanges.bybit': {
         'name': 'Bybit',
         'trade_base_url': 'https://www.bybit.com/trade/spot/',
-        'module': 'exchanges.bybit'
-        
+        'module': 'exchanges.bybit',
     },
     'exchanges.coinbase_pro': {
         'name': 'Coinbase',
         'trade_base_url': 'https://www.coinbase.com/trade/',
         'module': 'exchanges.coinbase_pro',
-        'sign': '_' 
     },
     'exchanges.kraken': {
         'name': 'Kraken',
         'trade_base_url': 'https://pro.kraken.com/app/trade/',
         'module': 'exchanges.kraken',
-        'sign': '_' 
     },
     # Kukoin module
     'exchanges.kukoin': {
         'name': 'KuCoin',
         'trade_base_url': 'https://www.kucoin.com/trade/',
         'module': 'exchanges.kukoin',
-        'sign': '_' 
     },
     # Okex module
     'exchanges.okex': {
         'name': 'OKEx',
         'trade_base_url': 'https://www.okex.com/',
         'module': 'exchanges.okex',
-        'sign': '_' 
+
     },
     # Bitstamp module
     'exchanges.bitstamp': {
