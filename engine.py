@@ -1,6 +1,8 @@
 # engine.py
 from importlib import import_module
 from config import EXCHANGES
+from exchange_formats import exchange_symbol_formats  # Import the dictionary
+
 
 def get_exchange_name(exchange_key):
     return EXCHANGES[exchange_key]['name']
@@ -33,10 +35,10 @@ def calculate_arbitrage(exchange1, exchange2):
         exchange2_price = float(exchange2_tickers[symbol]['last']) if exchange2_tickers[symbol]['last'] is not None else 0.0
         arbitrage = round((exchange2_price - exchange1_price) / exchange1_price * 100, 2)
 
-        exchange1_symbol_format = "/" if "/" in symbol else "_"
-        exchange2_symbol_format = "/" if "/" in symbol else "_"
-        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace(exchange1_symbol_format))
-        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace(exchange2_symbol_format))
+        exchange1_symbol_format = exchange_symbol_formats.get(exchange1_config['name'], "_")
+        exchange2_symbol_format = exchange_symbol_formats.get(exchange2_config['name'], "_")
+        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("/", exchange1_symbol_format))
+        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("/", exchange2_symbol_format))
 
 
         data.append({
@@ -56,4 +58,4 @@ def calculate_arbitrage(exchange1, exchange2):
     return data
 
 
-
+    
