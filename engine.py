@@ -1,7 +1,6 @@
 # engine.py
 from importlib import import_module
 from config import EXCHANGES
-from exchange_formats import exchange_symbol_formats  # Import the dictionary
 
 
 def get_exchange_name(exchange_key):
