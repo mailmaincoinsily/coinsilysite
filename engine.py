@@ -41,7 +41,17 @@ def calculate_arbitrage(exchange1, exchange2):
             symbol_link = symbol.replace('/', '-')
         else:
             symbol_link = symbol
+            
 
+        if exchange2 in ('exchanges.mexc', 'exchanges.gateio', 'exchanges.binance'):
+            symbol_link = symbol_link.replace('/', '_')
+        elif exchange2 == 'exchanges.bybit':
+            symbol_link = symbol_link.replace('/', '/')
+        elif exchange2 == 'exchanges.kucoin':
+            symbol_link = symbol_link.replace('/', '-')
+        else:
+            symbol_link = symbol
+        
         exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol_link)
         exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol_link)
        
