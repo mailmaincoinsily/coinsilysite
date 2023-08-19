@@ -37,8 +37,8 @@ def calculate_arbitrage(exchange1, exchange2):
 
         exchange1_symbol_format = exchange_symbol_formats.get(exchange1_config['name'], "_")
         exchange2_symbol_format = exchange_symbol_formats.get(exchange2_config['name'], "_")
-        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace("_", exchange1_symbol_format))
-        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace("_", exchange2_symbol_format))
+        exchange1_trade_link = "{}{}".format(exchange1_trade_base_url, symbol.replace(exchange1_symbol_format, "/"))
+        exchange2_trade_link = "{}{}".format(exchange2_trade_base_url, symbol.replace(exchange2_symbol_format, "/"))
 
 
         data.append({
