@@ -40,7 +40,7 @@ EXCHANGES = {
         'name': 'Bybit',
         'trade_base_url': 'https://www.bybit.com/trade/spot/',
         'module': 'exchanges.bybit'
-        'sign': '/'
+        'sign': r'/'
     },
     'exchanges.coinbase_pro': {
         'name': 'Coinbase',
