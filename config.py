@@ -176,7 +176,7 @@ EXCHANGES = {
     # Poloniex module
     'exchanges.poloniex': {
         'name': 'Poloniex',
-        'trade_base_url': 'https://poloniex.com/exchange/',
+        'trade_base_url': 'https://poloniex.com/trade/',
         'module': 'exchanges.poloniex',
     },
     # Whitebit module
